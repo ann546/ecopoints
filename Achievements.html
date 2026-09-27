@@ -1,0 +1,360 @@
+<!-- Achievements Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Achievements</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="User Dashboard.css?v=muhcihad9">
+<link rel="stylesheet" href="Resident Pages.css?v=muhcihad9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoPoints</span>
+    </div>
+
+    <nav class="side-nav">
+
+      <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+        <i class="fa-brands fa-dashcube"></i><span>Dashboard</span>
+      </a>
+
+      <a href="My QR Code.html" class="nav-item" data-label="My QR Code">
+        <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+      </a>
+
+      <a href="My EcoPoints.html" class="nav-item" data-label="My EcoPoints">
+        <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+      </a>
+
+      <a href="Rewards.html" class="nav-item" data-label="Rewards">
+        <i class="fa-solid fa-gift"></i><span>Rewards</span>
+      </a>
+
+      <a href="Collection Schedule.html" class="nav-item" data-label="Collection Schedule">
+        <i class="fa-solid fa-calendar-days"></i><span>Collection Schedule</span>
+      </a>
+
+      <a href="Notifications.html" class="nav-item" data-label="Notifications">
+        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+        <span class="nav-badge" style="display:none;">0</span>
+      </a>
+
+      <a href="Achievements.html" class="nav-item active" data-label="Achievements">
+        <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+      </a>
+
+      <a href="Leaderboard.html" class="nav-item" data-label="Leaderboard">
+        <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+      </a>
+
+      <a href="Profile.html" class="nav-item" data-label="Profile">
+        <i class="fa-solid fa-user"></i><span>Profile</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      
+
+    </nav>
+
+    <a href="Registration.html" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <header class="topbar">
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+    <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+
+      <div class="topbar-actions">
+
+        <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="dot"></span>
+        </button>
+
+        <div class="profile-menu" id="profileMenu">
+          <button class="profile-btn" id="profileBtn">
+            <span class="avatar">JD</span>
+            <span class="profile-name">Juan Dela Cruz</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <a href="Profile.html"><i class="fa-solid fa-user"></i> View Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="Registration.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-heading">
+        <h1><i class="fa-solid fa-trophy" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>Achievements</h1>
+        <p>Badges you've earned for your recycling habits and consistency.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Your Badges</h2>
+          <span class="panel-tag" id="achievementTag">&mdash; of 12 unlocked</span>
+        </div>
+
+        <div class="achievement-grid" id="achievementGrid"></div>
+      </div>
+
+
+    </main>
+
+  </div>
+
+</div>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Notification Center.js?v=muhcihad9"></script>
+<script src="Sidebar App.js?v=muhcihad9"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const name = getUserName();
+    const initials = name.split(" ").filter(Boolean).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    document.querySelectorAll(".profile-name").forEach(el => el.textContent = name);
+    document.querySelectorAll(".avatar").forEach(el => el.textContent = initials);
+  });
+</script>
+
+<script>
+  let mysqlHistory = [];   // { type, points, description, date }
+  let mysqlBalance = 0;
+  let mysqlRank = 999;
+
+  function totalKgFromHistory(history) {
+    let total = 0;
+    history.forEach((h) => {
+      const match = String(h.description || "").match(/\(([\d.]+)\s*kg\)/i);
+      if (match) total += parseFloat(match[1]);
+    });
+    return total;
+  }
+
+  function longestConsecutiveWeeks(history) {
+    const weekKeys = new Set();
+    history
+      .filter((h) => h.type === "scan")
+      .forEach((h) => {
+        const d = new Date(h.date);
+        if (Number.isNaN(d.getTime())) return;
+        const firstJan = new Date(d.getFullYear(), 0, 1);
+        const week = Math.ceil(
+          ((d - firstJan) / 86400000 + firstJan.getDay() + 1) / 7
+        );
+        weekKeys.add(d.getFullYear() * 100 + week);
+      });
+    const sorted = [...weekKeys].sort((a, b) => a - b);
+    let longest = sorted.length ? 1 : 0;
+    let current = 1;
+    for (let i = 1; i < sorted.length; i++) {
+      current = sorted[i] - sorted[i - 1] === 1 ? current + 1 : 1;
+      longest = Math.max(longest, current);
+    }
+    return longest;
+  }
+
+  function buildAchievements() {
+    const history = mysqlHistory;
+    const scanCount = history.filter((h) => h.type === "scan").length;
+    const totalKg = totalKgFromHistory(history);
+    const totalEarned = history
+      .filter((h) => Number(h.points) > 0)
+      .reduce((s, h) => s + Number(h.points), 0);
+    const hasRedemption = history.some((h) => h.type === "redeem");
+    const streak = longestConsecutiveWeeks(history);
+    const rank = mysqlRank;
+
+    return [
+      { id: "first_submission", icon: "fa-seedling", label: "Reward Hunter", unlocked: scanCount >= 1, points: 50 },
+      { id: "ten_submissions", icon: "fa-recycle", label: "10 Submissions", unlocked: scanCount >= 10, points: 150 },
+      { id: "streak_4week", icon: "fa-fire", label: "4-Week Streak", unlocked: streak >= 4, points: 150 },
+      { id: "kg_50", icon: "fa-weight-hanging", label: "50 kg Recycled", unlocked: totalKg >= 50, points: 200 },
+      { id: "scan_20", icon: "fa-qrcode", label: "QR Verified 20x", unlocked: scanCount >= 20, points: 250 },
+      { id: "first_redemption", icon: "fa-gift", label: "First Redemption", unlocked: hasRedemption, points: 50 },
+      { id: "top5_rank", icon: "fa-medal", label: "Top 5 Rank", unlocked: rank <= 5, points: 400 },
+      { id: "points_5000", icon: "fa-hundred-points", label: "5,000 Points", unlocked: totalEarned >= 5000, points: 500 },
+      { id: "kg_100", icon: "fa-weight-scale", label: "100 kg Recycled", unlocked: totalKg >= 100, points: 400 },
+      { id: "streak_8week", icon: "fa-calendar-check", label: "8-Week Streak", unlocked: streak >= 8, points: 350 },
+      { id: "community_helper", icon: "fa-users", label: "Community Helper", unlocked: false, points: 300 },
+      { id: "member_1year", icon: "fa-cake-candles", label: "1-Year Member", unlocked: false, points: 500 },
+    ];
+  }
+
+  function awardNewAchievements(achievements) {
+    if (typeof window.awardAchievement !== "function") return [];
+    const newly = [];
+    achievements.forEach((a) => {
+      if (!a.unlocked) return;
+      const wasNew = window.awardAchievement(a.id, a.label, a.points);
+      if (wasNew) newly.push(a);
+    });
+    return newly;
+  }
+
+  function showAchievementToast(achievement) {
+    let container = document.getElementById("achievementToastContainer");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "achievementToastContainer";
+      container.style.cssText =
+        "position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;";
+      document.body.appendChild(container);
+    }
+    const toast = document.createElement("div");
+    toast.style.cssText =
+      "pointer-events:auto;background:#fff;border-left:5px solid var(--primary-green,#769826);box-shadow:0 14px 34px rgba(46,63,22,0.16);border-radius:10px;padding:14px 18px;display:flex;align-items:flex-start;gap:12px;min-width:280px;max-width:360px;font-family:'Manrope',sans-serif;";
+    toast.innerHTML = `
+      <i class="fa-solid ${achievement.icon}" style="color:var(--primary-green,#769826);font-size:1.4rem;margin-top:2px;"></i>
+      <span style="display:flex;flex-direction:column;gap:2px;">
+        <span style="font-weight:800;font-size:.9rem;color:#20291A;">Achievement Unlocked: ${achievement.label}</span>
+        <span style="font-weight:500;font-size:.8rem;color:#5B6553;">+${achievement.points.toLocaleString()} EcoPoints</span>
+      </span>
+    `;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 5700);
+  }
+
+  function renderAchievements() {
+    const achievements = buildAchievements();
+    const grid = document.getElementById("achievementGrid");
+    const tag = document.getElementById("achievementTag");
+
+    grid.innerHTML = achievements
+      .map(
+        (a) => `
+      <div class="achievement ${a.unlocked ? "unlocked" : ""}">
+        <i class="fa-solid ${a.icon}"></i>
+        <span>${a.label}</span>
+      </div>
+    `
+      )
+      .join("");
+
+    const unlockedCount = achievements.filter((a) => a.unlocked).length;
+    tag.textContent = `${unlockedCount} of ${achievements.length} unlocked`;
+
+    const newlyAwarded = awardNewAchievements(achievements);
+    newlyAwarded.forEach((a, i) => {
+      setTimeout(() => showAchievementToast(a), i * 350);
+    });
+  }
+
+  async function loadAchievementsFromMysql() {
+    try {
+      let session = null;
+try {
+  session = JSON.parse(EcoSession() || "null");
+} catch (e) {}
+if (!session) {
+  try {
+    session = JSON.parse(sessionStorage.getItem("ecoUser") || "null");
+  } catch (e) {}
+}
+// Or, if auth-common is loaded: session = typeof getSession === "function" ? getSession() : session;
+
+      const res = await fetch(
+        `/api/residents/${encodeURIComponent(session.residentId)}/ecopoints`
+      );
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        console.error(data.error || "Failed to load ecopoints");
+        renderAchievements();
+        return;
+      }
+
+      mysqlBalance = Number(data.balance) || 0;
+
+      // Map MySQL history â†’ shape achievements expect
+      mysqlHistory = (data.history || []).map((h) => ({
+        type: String(h.entry_type || "").toLowerCase() === "scan" ? "scan" : "earn",
+        points: Number(h.points) || 0,
+        description: h.description || "",
+        date: h.created_at,
+      }));
+
+      // Redemptions â†’ redeem entries
+      (data.redemptions || []).forEach((r) => {
+        mysqlHistory.push({
+          type: "redeem",
+          points: -Number(r.points_cost) || 0,
+          description: r.reward_name || "Redemption",
+          date: r.redeemed_at,
+        });
+      });
+
+      // Rank from leaderboard API (optional)
+      try {
+        const lb = await fetch("/api/leaderboard");
+        const lbData = await lb.json();
+        if (lb.ok && lbData.success) {
+          const me = (lbData.leaderboard || []).find(
+            (e) => Number(e.residentId) === Number(session.residentId)
+          );
+          mysqlRank = me ? me.rank : 999;
+        }
+      } catch {
+        mysqlRank = 999;
+      }
+
+      renderAchievements();
+    } catch (err) {
+      console.error(err);
+      renderAchievements();
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadAchievementsFromMysql);
+</script>
+
+
+
+
+
+</body>
+</html>

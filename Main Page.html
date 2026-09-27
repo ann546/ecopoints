@@ -1,0 +1,560 @@
+<!-- Main Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Integrated Waste Collection and Rewards System</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="Main Page.css?v=muhcihad9">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a href="#home" class="logo">
+      <span class="logo-badge"><img src="logo.png" alt="EcoPoints logo"></span>
+      EcoPoints
+    </a>
+
+    <nav id="navMenu">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#works">How It Works</a></li>
+        <li><a href="#rewards">Rewards</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions" id="navActions">
+  <a href="Registration.html" class="login-link" id="guestLabel">Log In</a>
+  <a href="Registration.html?tab=register" class="nav-cta" id="registerSuggest">Register</a>
+
+  <!-- Logged-in Account menu (hidden for guests, shown via JS) -->
+  <div class="account-menu" id="accountMenu" style="display:none">
+    <span class="account-points-badge" id="accountPointsBadge" title="Your EcoPoints balance">
+      <i class="fa-solid fa-star"></i> <span id="accountPointsValue">0</span> pts
+    </span>
+    <button type="button" class="account-toggle" id="accountToggle" aria-haspopup="true" aria-expanded="false">
+      <span class="account-avatar"><i class="fa-solid fa-user"></i></span>
+      <span id="accountFirstName">Account</span>
+      <i class="fa-solid fa-chevron-down account-caret"></i>
+    </button>
+    <div class="account-dropdown" id="accountDropdown">
+      <a href="User Dashboard.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="Profile.html"><i class="fa-solid fa-id-card"></i> Profile/Account</a>
+      <a href="My QR Code.html"><i class="fa-solid fa-qrcode"></i>My QR</a>
+      <button type="button" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </div>
+</div>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Guest-only welcome banner (hidden automatically once logged in) -->
+<div class="guest-banner" id="guestBanner">
+  <div class="guest-banner-inner">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>Welcome, Guest! Register now and get <strong>250 EcoPoints free</strong> â€” start to earn.</span>
+  </div>
+  <div class="guest-banner-actions">
+    <a href="Registration.html" class="btn-mini">Log In</a>
+    <a href="Registration.html?tab=register" class="btn-mini btn-mini-primary">Register</a>
+  </div>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-slideshow" aria-hidden="true">
+    <img class="hero-slide" src="slide1.png" alt="">
+    <img class="hero-slide" src="slide2.png" alt="">
+    <img class="hero-slide" src="slide3.png" alt="">
+    <img class="hero-slide" src="slide4.png" alt="">
+    <img class="hero-slide" src="slide5.png" alt="">
+  </div>
+  <div class="hero-blob blob-1" aria-hidden="true"></div>
+  <div class="hero-blob blob-2" aria-hidden="true"></div>
+
+  <div class="hero-grid">
+    <div class="hero-text reveal">
+      <span class="eyebrow"><i class="fa-solid fa-leaf"></i> Barangay Recycling Program</span>
+      <h1>Recycle today.<br>Earn <span class="accent">EcoPoints</span> tomorrow.</h1>
+      <p>Submit your recyclables on collection day, get every drop-off verified by a collector, and turn points into groceries, school supplies, and everyday essentials.</p>
+
+      <div class="hero-actions" id="heroGuestActions">
+        <span class="eyebrow"><i class="fa-solid fa-gift"></i> Register today and get 250 EcoPoints free</span>
+        <a href="Registration.html?tab=register" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Register Now</a>
+        <a href="Registration.html" class="btn btn-ghost-green"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      </div>
+
+      <div class="hero-actions" id="heroAccountActions" style="display:none;">
+        <a href="User Dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Go to My Dashboard</a>
+        <a href="My QR Code.html" class="btn btn-ghost-green"><i class="fa-solid fa-trash-arrow-up"></i>My QR Code</a>
+      </div>
+
+      <div class="hero-trust">
+        <div class="avatars">
+          <span>JR</span><span>MC</span><span>AL</span><span>+</span>
+        </div>
+        <span id="heroTrustHouseholds">Trusted by 0+ households in the barangay</span>
+        
+      </div>
+      
+    </div>
+
+    
+
+    <div class="hero-visual reveal">
+      <div class="floating-chip chip-1" id="chipPtsSubmitted"><i class="fa-solid fa-bottle-water"></i> <span id="chipPtsValue">+0 pts submitted</span></div>
+      <div class="floating-chip chip-2"><i class="fa-solid fa-gift"></i> Reward redeemed</div>
+
+      <div class="hero-photo">
+        <img src="recyclebinpic.jpg" alt="Resident dropping off recyclables">
+      </div>
+
+      <div class="impact-card">
+        <div class="impact-ring">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <defs>
+              <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#A1CB35"/>
+                <stop offset="100%" stop-color="#769826"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="90" cy="90" r="80" fill="none" stroke-width="14"/>
+            <circle class="ring-fg" id="impactRing" cx="90" cy="90" r="80" fill="none" stroke-width="14"/>
+          </svg>
+          <div class="ring-label">
+            <span class="num" id="impactRingPercent">0%</span>
+            <span class="lbl">Monthly Goal</span>
+          </div>
+        </div>
+        <div class="impact-card-footer">
+          <div class="impact-stat">
+            <div class="val" id="statImpactKg">0</div>
+            <div class="cap">kg Recycled</div>
+          </div>
+          <div class="impact-stat">
+            <div class="val" id="statImpactMembers">0</div>
+            <div class="cap">Submissions</div>
+          </div>
+          <div class="impact-stat">
+            <div class="val" id="statImpactRewards">â‚±0</div>
+            <div class="cap">Rewards Given</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-marquee">
+    <div class="trust-track">
+      <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> Verified Collection</div>
+      <div class="trust-item"><i class="fa-solid fa-clock"></i> Weekly Schedule</div>
+      <div class="trust-item"><i class="fa-solid fa-house-flag"></i> Barangay Managed</div>
+      <div class="trust-item"><i class="fa-solid fa-gift"></i> Real Rewards</div>
+      <!-- duplicate set, hidden from assistive tech, so the loop has no visible seam -->
+      <div class="trust-item" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i> Verified Collection</div>
+      <div class="trust-item" aria-hidden="true"><i class="fa-solid fa-clock"></i> Weekly Schedule</div>
+      <div class="trust-item" aria-hidden="true"><i class="fa-solid fa-house-flag"></i> Barangay Managed</div>
+      <div class="trust-item" aria-hidden="true"><i class="fa-solid fa-gift"></i> Real Rewards</div>
+    </div>
+  </div>
+</div>
+
+
+<section class="works" id="works">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Process</span>
+      <h2>How EcoPoints works</h2>
+      <p>Five short steps stand between your recyclables and your next reward.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h4>Register</h4>
+        <p>Create your EcoPoints account in minutes. And recieve 250 points</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h4>Set Out Recyclables</h4>
+        <p>Bring them out on your group's scheduled collection day. No need to book.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h4>Collector Verification</h4>
+        <p>A collector scans your QR, weighs it, and confirms the drop-off.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <h4>Earn Points</h4>
+        <p>EcoPoints are credited to your account.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">5</div>
+        <h4>Redeem Rewards</h4>
+        <p>Trade points for groceries and essentials.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits" id="schedule">
+  <div class="container benefits-grid">
+    <div class="benefits-visual reveal">
+      <img class="benefits-photo" src="recyclebinpic.jpg" alt="Barangay collection day">
+      <span class="quote-mark">"</span>
+      <h3>A clear weekly rhythm, so sorting never feels confusing.</h3>
+      <p>Every collection is for anything that can be recycled â€” still sorted by type, and preferably clean. This keeps the routine simple: set recyclables aside as they accumulate, then bring them out on collection day.</p>
+    </div>
+
+    <div class="benefit-list">
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-file-lines"></i></div>
+        <div><h4>Paper (8 pts/kg)</h4><p>Newspapers, cardboard, and clean paper waste.</p></div>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-bottle-water"></i></div>
+        <div><h4>Plastic (12 pts/kg)</h4><p>Bottles, containers, and rinsed plastic packaging.</p></div>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-recycle"></i></div>
+        <div><h4>Metal (10 pts/kg)</h4><p>Cans, scrap metal, and other metal recyclables.</p></div>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-wine-bottle"></i></div>
+        <div><h4>Glass (10 pts/kg)</h4><p>Bottles and jars, sorted and rinsed.</p></div>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-plug"></i></div>
+        <div><h4>Electronic Waste (20 pts/kg)</h4><p>Old gadgets, cables, and small appliances.</p></div>
+      </div>
+      <div class="benefit-item reveal">
+        <div class="benefit-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <div><h4>Mixed Recyclables (8 pts/kg)</h4><p>Anything recyclable you couldn't bring earlier in the week.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Recycle Guide</span>
+      <h2>Know what goes where</h2>
+      <p>A quick look at each material category and what to set aside for collection day.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recycle1.jpg" alt="Paper recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Paper</span>
+          <h3>Newspapers & Cardboard</h3>
+          <p>Accepted: newspapers, magazines, cardboard boxes, clean paper bags, office paper.</p>
+          <p class="gallery-note">Not accepted: greasy pizza boxes, tissue, wax-coated paper.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recycle2.jpg" alt="Plastic recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Plastic</span>
+          <h3>Bottles & Containers</h3>
+          <p>Accepted: water bottles, shampoo bottles, food containers, rinsed plastic packaging.</p>
+          <p class="gallery-note">Not accepted: plastic wrappers, styrofoam, soiled containers.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recycle3.jpg" alt="Metal recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Metal</span>
+          <h3>Cans & Scrap Metal</h3>
+          <p>Accepted: aluminum cans, tin cans, metal scraps, bottle caps, clean foil.</p>
+          <p class="gallery-note">Not accepted: aerosol cans, sharp or rusted metal, batteries.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recycle4.jpg" alt="Glass recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Glass</span>
+          <h3>Bottles & Jars</h3>
+          <p>Accepted: glass bottles, jars, rinsed and with lids removed.</p>
+          <p class="gallery-note">Not accepted: broken glass, mirrors, ceramics, light bulbs.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recycle5.jpg" alt="Electronic waste recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">E-Waste</span>
+          <h3>Gadgets & Cables</h3>
+          <p>Accepted: old phones, chargers, cables, small appliances, batteries (separated).</p>
+          <p class="gallery-note">Not accepted: items with cracked screens leaking fluid, large appliances.</p>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal">
+        <div class="gallery-photo">
+          <img src="recyclebinpic.jpg" alt="Mixed recyclables">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Mixed</span>
+          <h3>Anything You Missed</h3>
+          <p>Accepted: any of the above categories you weren't able to bring earlier in the week.</p>
+          <p class="gallery-note">Please still sort by material before drop-off.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat reveal">
+      <h3 id="statHouseholds">0+</h3>
+      <p>Registered Households</p>
+    </div>
+    <div class="stat reveal">
+      <h3 id="statRecycled">0 tons</h3>
+      <p>Recycled This Month</p>
+    </div>
+    <div class="stat reveal">
+      <h3 id="statRewardsDistributed">â‚±0</h3>
+      <p>Rewards Distributed</p>
+    </div>
+    <div class="stat reveal">
+      <h3>0%</h3>
+      <p>Resident Satisfaction</p>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="rewards">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Reward Catalog</span>
+      <h2>Points that turn into everyday essentials</h2>
+      <p>A preview of what your household can redeem once your EcoPoints add up.</p>
+    </div>
+
+    <div class="reward-grid">
+      <a href="Rewards.html" class="reward-card reveal">
+        <div class="reward-image">
+          <div class="reward-icon"><img src="rice.png" alt="Rice"></div>
+        </div>
+        <div class="reward-body">
+          <h3>Rice</h3>
+          <p>Redeemable sacks of rice for the household pantry.</p>
+          <div class="reward-meta">
+            <span class="reward-points"><i class="fa-solid fa-star"></i> 1,200 pts</span>
+            <span class="reward-availability">Available</span>
+          </div>
+        </div>
+      </a>
+      <a href="Rewards.html" class="reward-card reveal">
+        <div class="reward-image">
+          <div class="reward-icon"><img src="grocery-pack.png" alt="Grocery Pack"></div>
+        </div>
+        <div class="reward-body">
+          <h3>Grocery Pack</h3>
+          <p>A curated bundle of everyday grocery staples.</p>
+          <div class="reward-meta">
+            <span class="reward-points"><i class="fa-solid fa-star"></i> 3,000 pts</span>
+            <span class="reward-availability">Available</span>
+          </div>
+        </div>
+      </a>
+      <a href="Rewards.html" class="reward-card reveal">
+        <div class="reward-image">
+          <div class="reward-icon"><img src="cooking-oil.png" alt="Cooking Oil"></div>
+        </div>
+        <div class="reward-body">
+          <h3>Cooking Oil</h3>
+          <p>Bottled cooking oil, redeemable in bulk.</p>
+          <div class="reward-meta">
+            <span class="reward-points"><i class="fa-solid fa-star"></i> 700 pts</span>
+            <span class="reward-availability limited">Limited Stock</span>
+          </div>
+        </div>
+      </a>
+      <a href="Rewards.html" class="reward-card reveal">
+        <div class="reward-image">
+          <div class="reward-icon"><img src="school-supplies.png" alt="School Supplies"></div>
+        </div>
+        <div class="reward-body">
+          <h3>School Supplies</h3>
+          <p>Notebooks, pens, and essentials for students.</p>
+          <div class="reward-meta">
+            <span class="reward-points"><i class="fa-solid fa-star"></i> 850 pts</span>
+            <span class="reward-availability">Available</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-box reveal">
+    <h2>Start recycling today</h2>
+    <p>Join your neighbors already earning rewards for every bag of recyclables they submit. Register now and get <strong>250 EcoPoints free</strong> just for signing up.</p>
+    <div class="cta-actions" id="ctaGuestActions">
+      <a href="Registration.html?tab=register" class="btn btn-primary">Join EcoPoints</a>
+      <a href="Registration.html" class="btn btn-outline">I already have an account</a>
+    </div>
+    <div class="cta-actions" id="ctaAccountActions" style="display:none;">
+      <a href="Rewards.html" class="btn btn-primary">Redeem Your Points</a>
+      <a href="User Dashboard.html" class="btn btn-outline">Go to My Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<section class="features section-with-bg" id="about">
+  <div class="section-bg-slideshow" aria-hidden="true">
+    <div class="section-bg-slide" style="background-image:url('recyclebinpic.jpg');"></div>
+    <div class="section-bg-slide" style="background-image:url('recycle1.jpg');"></div>
+    <div class="section-bg-slide" style="background-image:url('recycle2.jpg');"></div>
+    <div class="section-bg-slide" style="background-image:url('recycle3.jpg');"></div>
+    <div class="section-bg-slide" style="background-image:url('recycle4.jpg');"></div>
+  </div>
+  <div class="section-bg-overlay" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why EcoPoints</span>
+      <h2>Everything you need to recycle with purpose</h2>
+      <p>A simple loop: sort, submit, get verified, and earn points that turn into things your household actually uses.</p>
+    </div>
+
+    <div class="feature-grid" id="features">
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-trash-arrow-up"></i></div>
+        <h3>Submit Recyclable Waste</h3>
+        <p>Bring segregated paper, plastic, metal, glass, or e-waste on your barangay's assigned collection day.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+        <h3>Earn EcoPoints</h3>
+        <p>Every verified submission is weighed and converted into points, credited straight to your account.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-gift"></i></div>
+        <h3>Redeem Rewards</h3>
+        <p>Exchange your EcoPoints for rice, grocery packs, cooking oil, eco bags, and school supplies.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Track Your Progress</h3>
+        <p>See your point balance, submission history, and reward redemptions in one simple dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-head reveal">
+    <span class="eyebrow">Get in Touch</span>
+    <h2>Contact the EcoPoints office</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <i class="fa-solid fa-envelope"></i>
+      <h4>Email</h4>
+      <p>ecopoints@email.com</p>
+    </div>
+    <div class="contact-card reveal">
+      <i class="fa-solid fa-phone"></i>
+      <h4>Phone</h4>
+      <p>0912-345-6789</p>
+    </div>
+    <div class="contact-card reveal">
+      <i class="fa-solid fa-location-dot"></i>
+      <h4>Office</h4>
+      <p>Barangay EcoPoints Office</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#home" class="logo"><span class="logo-badge"><img src="logo.png" alt="EcoPoints logo"></span>EcoPoints</a>
+      <p>An integrated waste collection and rewards system helping barangay residents recycle with purpose.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#works">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Account</h5>
+      <ul>
+        <li><a href="Registration.html">Login</a></li>
+        <li><a href="Registration.html?tab=register">Register</a></li>
+        <li><a href="Collector Login.html">Staff Login</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:ecopoints@email.com">ecopoints@email.com</a></li>
+        <li><a href="tel:09123456789">0912-345-6789</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Â© 2026 EcoPoints | Integrated Waste Collection and Rewards System</span>
+  </div>
+</footer>
+
+<!-- Logout confirmation modal -->
+<div class="modal-overlay" id="logoutConfirmOverlay">
+  <div class="modal-box" role="alertdialog" aria-modal="true" aria-labelledby="logoutConfirmTitle" aria-describedby="logoutConfirmDesc">
+    <div class="modal-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+    <h3 id="logoutConfirmTitle">Log out of EcoPoints?</h3>
+    <p id="logoutConfirmDesc">You'll need to log in again to view your dashboard, QR code, and redeem rewards.</p>
+    <div class="modal-actions">
+      <button type="button" class="modal-btn modal-btn-cancel" id="logoutCancelBtn">Cancel</button>
+      <button type="button" class="modal-btn modal-btn-confirm" id="logoutConfirmBtn"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notifications (e.g. "You received 250 free EcoPoints!") -->
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="auth-common.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Main Page.js?v=muhcihad9"></script>
+</body>
+</html>

@@ -1,0 +1,1085 @@
+<!-- My EcoPoints Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | My EcoPoints</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="User Dashboard.css?v=muhcihad9">
+<link rel="stylesheet" href="Resident Pages.css?v=muhcihad9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+  .history-row{
+    align-items:center;
+    gap:var(--space-2);
+    flex-wrap:wrap;
+  }
+  .history-row .submission-info{
+    flex:1;
+    min-width:160px;
+  }
+  .badge-redeemed{
+    background:rgba(122,122,122,0.14);
+    color:var(--muted);
+  }
+
+  /* Points History sections: earned points, then redeemed rewards */
+  .history-section + .history-section{
+    margin-top:var(--space-4);
+  }
+  .history-section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-2);
+    flex-wrap:wrap;
+    margin-bottom:var(--space-1);
+    padding-bottom:var(--space-1);
+    border-bottom:1px solid var(--border);
+  }
+  .history-section-head h3{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-heading);
+    font-size:16px;
+    font-weight:600;
+    color:var(--dark-green);
+  }
+  .history-section-head h3 i{
+    color:var(--primary-green);
+    font-size:.85em;
+  }
+  .history-section-total{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--muted);
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoPoints</span>
+    </div>
+
+    <nav class="side-nav">
+
+      <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+        <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+      </a>
+
+      <a href="My QR Code.html" class="nav-item" data-label="My QR Code">
+        <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+      </a>
+
+      <a href="My EcoPoints.html" class="nav-item active" data-label="My EcoPoints">
+        <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+      </a>
+
+      <a href="Rewards.html" class="nav-item" data-label="Rewards">
+        <i class="fa-solid fa-gift"></i><span>Rewards</span>
+      </a>
+
+      <a href="Collection Schedule.html" class="nav-item" data-label="Collection Schedule">
+        <i class="fa-solid fa-calendar-days"></i><span>Collection Schedule</span>
+      </a>
+
+      <a href="Notifications.html" class="nav-item" data-label="Notifications">
+        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+        <span class="nav-badge" style="display:none;">0</span>
+      </a>
+
+      <a href="Achievements.html" class="nav-item" data-label="Achievements">
+        <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+      </a>
+
+      <a href="Leaderboard.html" class="nav-item" data-label="Leaderboard">
+        <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+      </a>
+
+      <a href="Profile.html" class="nav-item" data-label="Profile">
+        <i class="fa-solid fa-user"></i><span>Profile</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+    
+
+    </nav>
+
+    <a href="Registration.html" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <header class="topbar">
+
+      <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="topbar-actions">
+
+        <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="dot"></span>
+        </button>
+
+        <div class="profile-menu" id="profileMenu">
+          <button class="profile-btn" id="profileBtn">
+            <span class="avatar">JD</span>
+            <span class="profile-name">Juan Dela Cruz</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <a href="Profile.html"><i class="fa-solid fa-user"></i> View Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="Registration.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-heading">
+        <h1><i class="fa-solid fa-star" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>My EcoPoints</h1>
+        <p>Track your point balance and see exactly how your recycling turns into points.</p>
+      </div>
+
+      <div class="stat-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon icon-green"><i class="fa-solid fa-star"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Current Balance</span>
+            <span class="stat-value" id="statBalance">0</span>
+            <span class="stat-trend up" id="statBalanceTrend"><i class="fa-solid fa-arrow-trend-up"></i> +0 this month</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-orange"><i class="fa-solid fa-trophy"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Lifetime Points Earned</span>
+            <span class="stat-value" id="statEarned">0</span>
+            <span class="stat-trend neutral">All verified submissions</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-lightgreen"><i class="fa-solid fa-gift"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Lifetime Points Redeemed</span>
+            <span class="stat-value" id="statRedeemed">0</span>
+            <span class="stat-trend neutral" id="statRedeemedTrend">0 rewards claimed</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-dark"><i class="fa-solid fa-weight-scale"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Total Waste Submitted</span>
+            <span class="stat-value" id="statWeight">0 kg</span>
+            <span class="stat-trend up" id="statWeightTrend"><i class="fa-solid fa-arrow-trend-up"></i> +0 kg this month</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Points History</h2>
+          <span class="panel-tag">Earned points &amp; redeemed rewards</span>
+        </div>
+
+        <section class="history-section">
+          <div class="history-section-head">
+            <h3><i class="fa-solid fa-star"></i> Points Earned</h3>
+            <span class="history-section-total" id="earnedSectionTotal"></span>
+          </div>
+          <div class="submission-list" id="pointsEarnedList"></div>
+        </section>
+
+        <section class="history-section">
+          <div class="history-section-head">
+            <h3><i class="fa-solid fa-gift"></i> Redeemed Rewards</h3>
+            <span class="history-section-total" id="redeemedSectionTotal"></span>
+          </div>
+          <div class="submission-list" id="pointsRedeemedList"></div>
+        </section>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Points You Can Earn by Waste Type</h2>
+          <span class="panel-tag">Points per kilogram</span>
+        </div>
+
+        <div class="reward-list" id="pointsRateList">
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-file-lines"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">Paper</span>
+              <span class="reward-meta">Newspapers, cardboard, clean paper waste</span>
+            </div>
+            <span class="submission-points">8 pts/kg</span>
+          </div>
+
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-bottle-water"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">Plastic</span>
+              <span class="reward-meta">Bottles, containers, rinsed packaging</span>
+            </div>
+            <span class="submission-points">12 pts/kg</span>
+          </div>
+
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-recycle"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">Metal</span>
+              <span class="reward-meta">Cans, scrap metal, and other metal items</span>
+            </div>
+            <span class="submission-points">15 pts/kg</span>
+          </div>
+
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-wine-bottle"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">Glass</span>
+              <span class="reward-meta">Bottles and jars, sorted and rinsed</span>
+            </div>
+            <span class="submission-points">10 pts/kg</span>
+          </div>
+
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-plug"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">E-Waste</span>
+              <span class="reward-meta">Old gadgets, cables, small appliances</span>
+            </div>
+            <span class="submission-points">20 pts/kg</span>
+          </div>
+
+          <div class="reward-row">
+            <div class="reward-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <div class="reward-info">
+              <span class="reward-title">Mixed</span>
+              <span class="reward-meta">Assorted recyclables that couldn't be sorted</span>
+            </div>
+            <span class="submission-points">8 pts/kg</span>
+          </div>
+        </div>
+
+        <p style="color:var(--muted); font-size:12.5px; margin-top:var(--space-2);">
+          Final points also depend on condition: <strong>Clean &amp; Sorted</strong> earns the full rate, <strong>Needs Sorting</strong> earns 80%, and <strong>Contaminated</strong> earns 50%. A collector verifies weight and condition before points are issued.
+        </p>
+      </div>
+
+      <div class="panel-grid two-col">
+
+        
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Points by Material</h2>
+            <span class="panel-tag">This month</span>
+          </div>
+
+          <div class="reward-list" id="materialList"></div>
+        </div>
+
+      </div>
+
+      <div class="panel" style="text-align:center; display:flex; gap:var(--space-2); justify-content:center; flex-wrap:wrap;">
+        <a href="Rewards.html" class="btn btn-primary"><i class="fa-solid fa-gift"></i> Redeem Points</a>
+      </div>
+
+
+    </main>
+
+  </div>
+
+</div>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Notification Center.js?v=muhcihad9"></script>
+<script src="Sidebar App.js?v=muhcihad9"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const name = getUserName();
+    const initials = name.split(" ").filter(Boolean).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    document.querySelectorAll(".profile-name").forEach(el => el.textContent = name);
+    document.querySelectorAll(".avatar").forEach(el => el.textContent = initials);
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script>
+  /* All numbers on this page are computed from the same getPoints()
+     and getHistory() data your Points & History page reads, so
+     redeeming or scanning anywhere in the site updates this page too. */
+
+
+const MATERIALS = {
+    Plastic: {
+        icon: "fa-bottle-water",
+        keywords: ["plastic"]
+    },
+    Paper: {
+        icon: "fa-file-lines",
+        keywords: ["paper", "cardboard"]
+    },
+    Metal: {
+        icon: "fa-recycle",
+        keywords: ["metal", "cans"]
+    },
+    Glass: {
+        icon: "fa-wine-bottle",
+        keywords: ["glass"]
+    },
+    "E-Waste": {
+        icon: "fa-plug",
+        keywords: ["e-waste", "electronic", "gadget"]
+    }
+};
+
+let ECOPOINTS_DATA = null;
+
+
+/* =========================
+   GET LOGGED-IN RESIDENT
+========================= */
+
+function getEcoPointsResident() {
+    try {
+        const session = EcoSession();
+
+        if (!session || !session.residentId) {
+            console.error("No resident ID found.");
+            return null;
+        }
+
+        return session;
+    } catch (error) {
+        console.error(
+            "Could not read resident session:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+/* =========================
+   LOAD ECOPOINTS FROM MYSQL
+========================= */
+
+async function loadEcoPointsData() {
+
+    const session = getEcoPointsResident();
+
+    if (!session) {
+        return false;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/residents/${encodeURIComponent(session.residentId)}/ecopoints`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.error || "Failed to load EcoPoints data."
+            );
+        }
+
+        ECOPOINTS_DATA = data;
+
+        console.log(
+            "EcoPoints data loaded from MySQL:",
+            ECOPOINTS_DATA
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "EcoPoints MySQL error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+/* =========================
+   DATE HELPERS
+========================= */
+
+function isSameMonth(dateValue, referenceDate) {
+
+    const date = new Date(dateValue);
+
+    return (
+        date.getFullYear() === referenceDate.getFullYear() &&
+        date.getMonth() === referenceDate.getMonth()
+    );
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatHistoryDate(dateValue) {
+
+    if (!dateValue) {
+        return "";
+    }
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+    });
+}
+
+
+/* =========================
+   RENDER STATS
+========================= */
+
+function renderStats() {
+
+    if (!ECOPOINTS_DATA) {
+        return;
+    }
+
+    const history =
+        Array.isArray(ECOPOINTS_DATA.history)
+            ? ECOPOINTS_DATA.history
+            : [];
+
+    const now = new Date();
+
+    const earnedThisMonth = history
+        .filter(entry =>
+            Number(entry.points) > 0 &&
+            isSameMonth(entry.created_at, now)
+        )
+        .reduce(
+            (sum, entry) =>
+                sum + Number(entry.points || 0),
+            0
+        );
+
+    const redeemedCount =
+        Number(ECOPOINTS_DATA.redemptionCount || 0);
+
+    document.getElementById(
+        "statBalance"
+    ).textContent =
+        Number(
+            ECOPOINTS_DATA.balance || 0
+        ).toLocaleString();
+
+
+    document.getElementById(
+        "statBalanceTrend"
+    ).innerHTML =
+        `<i class="fa-solid fa-arrow-trend-up"></i> +${earnedThisMonth.toLocaleString()} this month`;
+
+
+    document.getElementById(
+        "statEarned"
+    ).textContent =
+        Number(
+            ECOPOINTS_DATA.lifetimeEarned || 0
+        ).toLocaleString();
+
+
+    document.getElementById(
+        "statRedeemed"
+    ).textContent =
+        Number(
+            ECOPOINTS_DATA.lifetimeRedeemed || 0
+        ).toLocaleString();
+
+
+    document.getElementById(
+        "statRedeemedTrend"
+    ).textContent =
+        `${redeemedCount} reward${redeemedCount === 1 ? "" : "s"} claimed`;
+
+
+    /*
+       Waste weight is only available when the
+       history description contains a value such as:
+
+       "Plastic - 2 kg"
+    */
+
+    let totalKg = 0;
+    let kgThisMonth = 0;
+
+    history.forEach(entry => {
+
+        if (Number(entry.points) <= 0) {
+            return;
+        }
+
+        const description =
+            String(entry.description || "");
+
+        const match =
+            description.match(/([\d.]+)\s*kg/i);
+
+        if (!match) {
+            return;
+        }
+
+        const kg = parseFloat(match[1]);
+
+        if (Number.isNaN(kg)) {
+            return;
+        }
+
+        totalKg += kg;
+
+        if (
+            isSameMonth(
+                entry.created_at,
+                now
+            )
+        ) {
+            kgThisMonth += kg;
+        }
+    });
+
+
+    document.getElementById(
+        "statWeight"
+    ).textContent =
+        totalKg.toFixed(1) + " kg";
+
+
+    document.getElementById(
+        "statWeightTrend"
+    ).innerHTML =
+        `<i class="fa-solid fa-arrow-trend-up"></i> +${kgThisMonth.toFixed(1)} kg this month`;
+}
+
+
+/* =========================
+   MATERIALS
+========================= */
+
+function renderMaterials() {
+
+    if (!ECOPOINTS_DATA) {
+        return;
+    }
+
+    const history =
+        Array.isArray(ECOPOINTS_DATA.history)
+            ? ECOPOINTS_DATA.history
+            : [];
+
+    const totals = {};
+
+    Object.keys(MATERIALS).forEach(
+        material => {
+            totals[material] = 0;
+        }
+    );
+
+
+    history
+        .filter(entry =>
+            Number(entry.points) > 0
+        )
+        .forEach(entry => {
+
+            const description =
+                String(
+                    entry.description || ""
+                ).toLowerCase();
+
+            const material =
+                Object.entries(MATERIALS)
+                    .find(([, data]) =>
+                        data.keywords.some(
+                            keyword =>
+                                description.includes(keyword)
+                        )
+                    );
+
+            if (material) {
+
+                totals[material[0]] +=
+                    Number(entry.points || 0);
+            }
+        });
+
+
+    const rows =
+        Object.entries(totals)
+            .filter(([, points]) => points > 0)
+            .sort((a, b) => b[1] - a[1]);
+
+
+    const list =
+        document.getElementById(
+            "materialList"
+        );
+
+
+    if (!rows.length) {
+
+        list.innerHTML =
+            `<div class="empty-note">
+                No verified submissions yet.
+            </div>`;
+
+        return;
+    }
+
+
+    const maxValue =
+        Math.max(
+            1,
+            ...rows.map(
+                ([, points]) => points
+            )
+        );
+
+
+    list.innerHTML =
+        rows.map(
+            ([name, points]) => {
+
+                const percentage =
+                    Math.round(
+                        (points / maxValue) * 100
+                    );
+
+                return `
+                    <div class="reward-row">
+
+                        <div class="reward-icon">
+                            <i class="fa-solid ${MATERIALS[name].icon}"></i>
+                        </div>
+
+                        <div class="reward-info">
+
+                            <span class="reward-title">
+                                ${name}
+                            </span>
+
+                            <div class="progress-track">
+                                <div
+                                    class="progress-fill"
+                                    style="width:${percentage}%"
+                                ></div>
+                            </div>
+
+                            <span class="reward-meta">
+                                ${points.toLocaleString()} pts earned
+                            </span>
+
+                        </div>
+
+                    </div>
+                `;
+            }
+        ).join("");
+}
+
+
+/* =========================
+   HISTORY ICON
+========================= */
+
+function iconForHistoryEntry(entry) {
+
+    if (
+        entry.entry_type === "redeem"
+    ) {
+        return "fa-gift";
+    }
+
+    if (
+        entry.entry_type === "achievement"
+    ) {
+        return "fa-trophy";
+    }
+
+    if (
+        entry.entry_type === "adjustment"
+    ) {
+        return "fa-sliders";
+    }
+
+    const description =
+        String(
+            entry.description || ""
+        ).toLowerCase();
+
+
+    const material =
+        Object.entries(MATERIALS)
+            .find(([, data]) =>
+                data.keywords.some(
+                    keyword =>
+                        description.includes(keyword)
+                )
+            );
+
+
+    return material
+        ? material[1].icon
+        : "fa-recycle";
+}
+
+
+/* =========================
+   HISTORY ROW
+========================= */
+
+function historyRowHtml(entry) {
+
+    const icon =
+        iconForHistoryEntry(entry);
+
+    const points =
+        Number(entry.points || 0);
+
+    let badgeClass =
+        "badge-verified";
+
+    let badgeText =
+        "Received";
+
+    let pointsText =
+        `+${points.toLocaleString()} pts`;
+
+    let pointsColor =
+        "var(--primary-green)";
+
+
+    if (points < 0) {
+
+        badgeClass =
+            "badge-redeemed";
+
+        badgeText =
+            "Redeemed";
+
+        pointsText =
+            `${points.toLocaleString()} pts`;
+
+        pointsColor =
+            "var(--danger)";
+    }
+
+
+    if (
+        entry.entry_type === "achievement"
+    ) {
+        badgeText =
+            "Achievement";
+    }
+
+
+    if (
+        entry.entry_type === "adjustment"
+    ) {
+        badgeText =
+            "Adjustment";
+    }
+
+
+    return `
+        <div class="submission-row history-row">
+
+            <div class="submission-icon">
+                <i class="fa-solid ${icon}"></i>
+            </div>
+
+            <div class="submission-info">
+
+                <span class="submission-title">
+                    ${entry.description}
+                </span>
+
+                <span class="submission-meta">
+                    ${formatHistoryDate(entry.created_at)}
+                </span>
+
+            </div>
+
+            <span
+                class="submission-points"
+                style="color:${pointsColor};"
+            >
+                ${pointsText}
+            </span>
+
+            <span class="badge ${badgeClass}">
+                ${badgeText}
+            </span>
+
+        </div>
+    `;
+}
+
+
+/* =========================
+   RENDER EARNED HISTORY
+========================= */
+
+function renderEarnedHistory() {
+
+    const history =
+        Array.isArray(ECOPOINTS_DATA.history)
+            ? ECOPOINTS_DATA.history
+            : [];
+
+
+    const earned =
+        history
+            .filter(entry =>
+                Number(entry.points) > 0
+            );
+
+
+    const list =
+        document.getElementById(
+            "pointsEarnedList"
+        );
+
+
+    const total =
+        document.getElementById(
+            "earnedSectionTotal"
+        );
+
+
+    if (!earned.length) {
+
+        list.innerHTML =
+            `<div class="empty-note">
+                No points earned yet.
+            </div>`;
+
+        total.textContent = "";
+
+        return;
+    }
+
+
+    const totalPoints =
+        earned.reduce(
+            (sum, entry) =>
+                sum + Number(entry.points || 0),
+            0
+        );
+
+
+    list.innerHTML =
+        earned
+            .map(historyRowHtml)
+            .join("");
+
+
+    total.textContent =
+        `${earned.length} record${earned.length === 1 ? "" : "s"} Â· +${totalPoints.toLocaleString()} pts`;
+}
+
+
+/* =========================
+   RENDER REDEEMED HISTORY
+========================= */
+
+function renderRedeemedHistory() {
+
+    const redemptions =
+        Array.isArray(
+            ECOPOINTS_DATA.redemptions
+        )
+            ? ECOPOINTS_DATA.redemptions
+            : [];
+
+
+    const list =
+        document.getElementById(
+            "pointsRedeemedList"
+        );
+
+
+    const total =
+        document.getElementById(
+            "redeemedSectionTotal"
+        );
+
+
+    if (!redemptions.length) {
+
+        list.innerHTML =
+            `<div class="empty-note">
+                No rewards redeemed yet.
+            </div>`;
+
+        total.textContent = "";
+
+        return;
+    }
+
+
+    const redeemedEntries =
+        redemptions.map(
+            redemption => ({
+
+                entry_type: "redeem",
+
+                description:
+                    redemption.reward_name,
+
+                points:
+                    -Number(
+                        redemption.points_cost || 0
+                    ),
+
+                created_at:
+                    redemption.redeemed_at,
+
+                redemption_status:
+                    redemption.redemption_status
+
+            })
+        );
+
+
+    list.innerHTML =
+        redeemedEntries
+            .map(historyRowHtml)
+            .join("");
+
+
+    const totalPoints =
+        redemptions.reduce(
+            (sum, redemption) =>
+                sum +
+                Number(
+                    redemption.points_cost || 0
+                ),
+            0
+        );
+
+
+    total.textContent =
+        `${redemptions.length} reward${redemptions.length === 1 ? "" : "s"} Â· -${totalPoints.toLocaleString()} pts`;
+}
+
+
+/* =========================
+   LOAD EVERYTHING
+========================= */
+
+async function initializeEcoPointsPage() {
+
+    const loaded =
+        await loadEcoPointsData();
+
+
+    if (!loaded) {
+
+        document.getElementById(
+            "pointsEarnedList"
+        ).innerHTML =
+            `<div class="empty-note">
+                Unable to load your points history.
+                Please refresh the page.
+            </div>`;
+
+        return;
+    }
+
+
+    renderStats();
+
+    renderMaterials();
+
+    renderEarnedHistory();
+
+    renderRedeemedHistory();
+}
+
+
+/* =========================
+   START PAGE
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeEcoPointsPage();
+
+    }
+);
+
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,542 @@
+<!-- Collection Schedule Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Collection Schedule</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="User Dashboard.css?v=muhcihad9">
+<link rel="stylesheet" href="Resident Pages.css?v=muhcihad9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+      /* ===== My Collection Schedule (resident dashboard) =====
+         Scoped to this page only. Pulls the actual street -> collection
+         day assignment the Admin sets in Collector Groups / Street
+         Assignments (localStorage "ecoCollectorGroups"), so this always
+         matches the Admin Dashboard's schedule. See User Dashboard.js. */
+
+      .mysched-panel{
+        overflow:hidden;
+      }
+
+      .mysched-loading{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        padding:48px 20px;
+        color:var(--muted);
+        font-size:13.5px;
+        font-weight:600;
+      }
+
+      .mysched-loading i{
+        font-size:22px;
+        color:var(--primary-green);
+        animation:myschedSpin 1.1s linear infinite;
+      }
+
+      @keyframes myschedSpin{
+        to{ transform:rotate(360deg); }
+      }
+
+      .mysched-hero{
+        position:relative;
+        overflow:hidden;
+        border-radius:var(--radius-lg);
+        padding:var(--space-3);
+        color:var(--white);
+        background:
+          radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,.16), transparent 55%),
+          linear-gradient(135deg, var(--primary-green), var(--dark-green) 78%);
+        box-shadow:0 14px 34px rgba(46,63,22,.28);
+        animation:myschedRise .5s cubic-bezier(.2,.8,.2,1) both;
+      }
+
+      @keyframes myschedRise{
+        from{ opacity:0; transform:translateY(10px); }
+        to{ opacity:1; transform:translateY(0); }
+      }
+
+      .mysched-hero::before,
+      .mysched-hero::after{
+        content:"";
+        position:absolute;
+        border-radius:50%;
+        background:rgba(255,255,255,.08);
+        pointer-events:none;
+      }
+
+      .mysched-hero::before{
+        width:220px;
+        height:220px;
+        right:-70px;
+        top:-90px;
+      }
+
+      .mysched-hero::after{
+        width:140px;
+        height:140px;
+        left:-50px;
+        bottom:-60px;
+        background:rgba(161,203,53,.16);
+      }
+
+      .mysched-hero.today{
+        background:
+          radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,.2), transparent 55%),
+          linear-gradient(135deg, #A1CB35, var(--primary-green) 78%);
+        box-shadow:0 14px 34px rgba(118,152,38,.38);
+      }
+
+      .mysched-hero-top{
+        position:relative;
+        z-index:1;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-bottom:14px;
+      }
+
+      .mysched-kicker{
+        display:inline-flex;
+        align-items:center;
+        gap:7px;
+        font-size:11px;
+        font-weight:800;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+        opacity:.85;
+      }
+
+      .mysched-countdown{
+        display:inline-flex;
+        align-items:center;
+        gap:7px;
+        padding:7px 14px;
+        border-radius:999px;
+        background:rgba(255,255,255,.18);
+        backdrop-filter:blur(2px);
+        font-size:12.5px;
+        font-weight:800;
+      }
+
+      .mysched-countdown.today{
+        background:var(--white);
+        color:var(--dark-green);
+        animation:myschedPulse 1.8s ease-in-out infinite;
+      }
+
+      @keyframes myschedPulse{
+        0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.55); }
+        50%{ box-shadow:0 0 0 8px rgba(255,255,255,0); }
+      }
+
+      .mysched-hero-day{
+        position:relative;
+        z-index:1;
+        font-family:var(--font-heading);
+        font-size:34px;
+        font-weight:700;
+        line-height:1.1;
+        margin-bottom:4px;
+      }
+
+      .mysched-hero-sub{
+        position:relative;
+        z-index:1;
+        font-size:13.5px;
+        font-weight:600;
+        opacity:.92;
+        margin-bottom:18px;
+      }
+
+      .mysched-hero-stats{
+        position:relative;
+        z-index:1;
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:10px;
+      }
+
+      .mysched-stat{
+        background:rgba(255,255,255,.14);
+        border:1px solid rgba(255,255,255,.18);
+        border-radius:12px;
+        padding:10px 12px;
+        min-width:0;
+      }
+
+      .mysched-stat span{
+        display:block;
+        font-size:10px;
+        font-weight:800;
+        letter-spacing:.05em;
+        text-transform:uppercase;
+        opacity:.8;
+        margin-bottom:3px;
+      }
+
+      .mysched-stat strong{
+        display:block;
+        font-size:13px;
+        font-weight:700;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+
+      /* ---- weekly strip ---- */
+
+      .mysched-strip{
+        display:grid;
+        grid-template-columns:repeat(7,1fr);
+        gap:6px;
+        margin-top:16px;
+      }
+
+      .mysched-pill{
+        position:relative;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:6px;
+        padding:10px 4px 12px;
+        border-radius:12px;
+        background:var(--light-gray);
+        color:var(--muted);
+        text-align:center;
+        transition:transform .2s ease, box-shadow .2s ease;
+        animation:myschedRise .5s cubic-bezier(.2,.8,.2,1) both;
+      }
+
+      .mysched-pill:nth-child(1){ animation-delay:.02s; }
+      .mysched-pill:nth-child(2){ animation-delay:.06s; }
+      .mysched-pill:nth-child(3){ animation-delay:.10s; }
+      .mysched-pill:nth-child(4){ animation-delay:.14s; }
+      .mysched-pill:nth-child(5){ animation-delay:.18s; }
+      .mysched-pill:nth-child(6){ animation-delay:.22s; }
+      .mysched-pill:nth-child(7){ animation-delay:.26s; }
+
+      .mysched-pill .p-day{
+        font-size:10px;
+        font-weight:800;
+        letter-spacing:.04em;
+        text-transform:uppercase;
+      }
+
+      .mysched-pill .p-icon{
+        width:26px;
+        height:26px;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:var(--white);
+        color:var(--border);
+        font-size:11px;
+      }
+
+      .mysched-pill.off{
+        opacity:.55;
+      }
+
+      .mysched-pill.today{
+        color:var(--dark-green);
+        box-shadow:inset 0 0 0 1.5px var(--border);
+      }
+
+      .mysched-pill.today .p-icon{
+        color:var(--primary-green);
+      }
+
+      .mysched-pill.mine{
+        background:linear-gradient(160deg, rgba(118,152,38,.16), rgba(161,203,53,.10));
+        color:var(--dark-green);
+      }
+
+      .mysched-pill.mine .p-icon{
+        background:var(--primary-green);
+        color:var(--white);
+      }
+
+      .mysched-pill.mine.today{
+        background:linear-gradient(160deg, var(--primary-green), #567a1e);
+        color:var(--white);
+        transform:translateY(-3px) scale(1.04);
+        box-shadow:0 10px 20px rgba(118,152,38,.35);
+      }
+
+      .mysched-pill.mine.today .p-icon{
+        background:var(--white);
+        color:var(--primary-green);
+      }
+
+      .mysched-pill.mine::after{
+        content:"\f0d5"; /* truck-ish caret, fallback handled by icon instead */
+        display:none;
+      }
+
+      .mysched-pill .p-tag{
+        position:absolute;
+        top:-8px;
+        left:50%;
+        transform:translateX(-50%);
+        background:var(--dark-green);
+        color:var(--white);
+        font-size:8.5px;
+        font-weight:800;
+        letter-spacing:.03em;
+        text-transform:uppercase;
+        padding:2px 6px;
+        border-radius:999px;
+        white-space:nowrap;
+      }
+
+      .mysched-pill.mine.today .p-tag{
+        background:var(--white);
+        color:var(--dark-green);
+      }
+
+      .mysched-foot{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin-top:14px;
+        padding:10px 12px;
+        border-radius:10px;
+        background:var(--light-gray);
+        color:var(--dark-text);
+        font-size:12px;
+        font-weight:600;
+      }
+
+      .mysched-foot i{
+        color:var(--primary-green);
+      }
+
+      .mysched-empty{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
+        text-align:center;
+        padding:40px 20px;
+        color:var(--muted);
+      }
+
+      .mysched-empty i{
+        font-size:26px;
+        color:var(--border);
+      }
+
+      .mysched-empty a{
+        color:var(--primary-green);
+        font-weight:700;
+      }
+
+      @media(max-width:520px){
+        .mysched-hero-stats{
+          grid-template-columns:1fr;
+        }
+        .mysched-strip{
+          grid-template-columns:repeat(7,minmax(34px,1fr));
+        }
+        .mysched-pill{
+          padding:8px 2px 10px;
+        }
+        .mysched-pill .p-day{
+          font-size:9px;
+        }
+      }
+    
+      /* extra: upcoming dates panel on this page */
+      .mysched-upcoming-sub{
+        font-size:12.5px;
+        color:var(--muted);
+        margin:-6px 0 var(--space-2);
+      }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoPoints</span>
+    </div>
+
+    <nav class="side-nav">
+
+      <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+        <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+      </a>
+
+      <a href="My QR Code.html" class="nav-item" data-label="My QR Code">
+        <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+      </a>
+
+      <a href="My EcoPoints.html" class="nav-item" data-label="My EcoPoints">
+        <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+      </a>
+
+      <a href="Rewards.html" class="nav-item" data-label="Rewards">
+        <i class="fa-solid fa-gift"></i><span>Rewards</span>
+      </a>
+
+      <a href="Collection Schedule.html" class="nav-item active" data-label="Collection Schedule">
+        <i class="fa-solid fa-calendar-days"></i><span>Collection Schedule</span>
+      </a>
+
+      <a href="Notifications.html" class="nav-item" data-label="Notifications">
+        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+        <span class="nav-badge" style="display:none;">0</span>
+      </a>
+
+      <a href="Achievements.html" class="nav-item" data-label="Achievements">
+        <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+      </a>
+
+      <a href="Leaderboard.html" class="nav-item" data-label="Leaderboard">
+        <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+      </a>
+
+      <a href="Profile.html" class="nav-item" data-label="Profile">
+        <i class="fa-solid fa-user"></i><span>Profile</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      
+
+    </nav>
+
+    <a href="Registration.html" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <header class="topbar">
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+     <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+      <div class="topbar-actions">
+
+        
+
+        <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="dot"></span>
+        </button>
+
+        
+
+        <div class="profile-menu" id="profileMenu">
+          <button class="profile-btn" id="profileBtn">
+            <span class="avatar">JD</span>
+            <span class="profile-name">Juan Dela Cruz</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <a href="Profile.html"><i class="fa-solid fa-user"></i> View Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="Registration.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-heading">
+        <h1><i class="fa-solid fa-calendar-days" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>Collection Schedule</h1>
+        <p>Know what to bring, and when, so nothing gets left behind on pickup day.</p>
+      </div>
+
+      <div class="panel mysched-panel">
+        <div class="panel-head">
+          <h2>My Collection Schedule</h2>
+          <span class="panel-tag" id="myScheduleTag">Set by the Barangay</span>
+        </div>
+
+        <div id="myScheduleCard">
+          <div class="mysched-loading">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Loading your street's schedule&hellip;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="upcomingPanel" hidden>
+        <div class="panel-head">
+          <h2>Upcoming Collection Dates</h2>
+          <span class="panel-tag" id="upcomingTag"></span>
+        </div>
+
+        <p class="mysched-upcoming-sub" id="upcomingSub"></p>
+
+        <div class="schedule-list" id="upcomingList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2><i class="fa-solid fa-qrcode" style="color:var(--primary-green);"></i>&nbsp; Always bring your QR code</h2>
+        </div>
+        <p style="color:var(--muted); font-size:.92rem;">
+          Your QR code is how the collector identifies your account. Open
+          <a href="My QR Code.html" style="color:var(--primary-green); font-weight:700;">My QR Code</a>
+          and show it on your phone, or bring a printed copy, every collection day.
+        </p>
+      </div>
+
+
+    </main>
+
+  </div>
+
+</div>
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="legacy-bridge.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Notification Center.js?v=muhcihad9"></script>
+<script src="Caniogan Streets.js?v=muhcihad9"></script>
+<script src="Sidebar App.js?v=muhcihad9"></script>
+
+<script src="Collection Schedule.js?v=muhcihad9"></script>
+
+</body>
+</html>

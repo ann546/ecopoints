@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Resident EcoPoints Records</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Collector Pages.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <style>
+      .record-section {
+        margin-top: 24px;
+      }
+
+      .record-section .panel-head {
+        margin-bottom: 14px;
+      }
+
+      .record-summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .record-summary-card {
+        padding: 17px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--white);
+      }
+
+      .record-summary-label {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 800;
+      }
+
+      .record-summary-value {
+        display: block;
+        color: var(--dark-green);
+        font-family: var(--font-heading);
+        font-size: 25px;
+        font-weight: 700;
+        margin-top: 5px;
+      }
+
+      .record-summary-note {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+      }
+
+      .record-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .activity-table-wrap {
+        overflow-x: auto;
+      }
+
+      .activity-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 560px;
+      }
+
+      .activity-table th,
+      .activity-table td {
+        padding: 11px 9px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .activity-table th {
+        color: var(--muted);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .activity-table td {
+        font-size: 11px;
+        color: var(--dark-text);
+      }
+
+      .activity-table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .activity-table strong {
+        color: var(--dark-green);
+      }
+
+      .record-empty {
+        text-align: center;
+        padding: 28px 15px;
+        color: var(--muted);
+      }
+
+      .record-empty i {
+        display: block;
+        font-size: 27px;
+        margin-bottom: 9px;
+        color: var(--border);
+      }
+
+      .record-empty strong {
+        display: block;
+        color: var(--dark-text);
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .record-empty p {
+        font-size: 11px;
+        margin: 0;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .status-pending {
+        background: #fff5df;
+        color: #9b6a00;
+      }
+
+      .status-verified {
+        background: #eaf5e9;
+        color: #36733a;
+      }
+
+      .status-rejected {
+        background: #fdeaea;
+        color: #a33b3b;
+      }
+
+      .status-completed {
+        background: #eaf5e9;
+        color: #36733a;
+      }
+
+      .status-cancelled {
+        background: #f1f1f1;
+        color: #777;
+      }
+
+      .points-positive {
+        color: var(--primary-green);
+        font-weight: 800;
+      }
+
+      .points-negative {
+        color: var(--danger);
+        font-weight: 800;
+      }
+
+      .resident-mini {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px;
+        border-radius: 10px;
+        background: #f6f8f5;
+        border: 1px solid #e4e9e2;
+        margin-bottom: 15px;
+      }
+
+      .resident-mini-info {
+        flex: 1;
+      }
+
+      .resident-mini-name {
+        display: block;
+        font-weight: 800;
+        color: var(--dark-green);
+        font-size: 13px;
+      }
+
+      .resident-mini-id {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 3px;
+      }
+
+      .resident-mini-change {
+        color: var(--primary-green);
+        font-size: 11px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .resident-mini-change:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 950px) {
+        .record-summary {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .record-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .record-summary {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a
+            href="Collector Dashboard.html"
+            class="nav-item"
+            data-label="Dashboard"
+          >
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a
+            href="QR Code Scanner.html"
+            class="nav-item"
+            data-label="QR Code Scanner"
+          >
+            <i class="fa-solid fa-qrcode"></i>
+            <span>QR Code Scanner</span>
+          </a>
+
+          <a
+            href="Waste Verification.html"
+            class="nav-item"
+            data-label="Waste Verification"
+          >
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span>Waste Verification</span>
+          </a>
+
+          <a
+            href="Collection History.html"
+            class="nav-item"
+            data-label="Collection History"
+          >
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Collection History</span>
+          </a>
+
+          <a
+            href="Resident EcoPoints Records.html"
+            class="nav-item active"
+            data-label="Resident EcoPoints Records"
+          >
+            <i class="fa-solid fa-address-book"></i>
+            <span>Resident EcoPoints Records</span>
+          </a>
+
+          <a
+            href="Notifications.html"
+            class="nav-item"
+            data-label="Notifications"
+          >
+            <i class="fa-solid fa-bell"></i>
+            <span>Notifications</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item" data-label="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="globalSearch"
+              placeholder="Search residents, waste records, transactions..."
+            />
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">EC</span>
+                <span class="profile-name"> EcoPoints Collector </span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#">
+                  <i class="fa-solid fa-user"></i>
+                  View Profile
+                </a>
+
+                <a href="#">
+                  <i class="fa-solid fa-gear"></i>
+                  Settings
+                </a>
+
+                <a href="Registration.html">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-address-book"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i>
+              Resident EcoPoints Records
+            </h1>
+
+            <p>
+              View actual resident activity, waste records, EcoPoints activity,
+              rewards, collections, and transactions.
+            </p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Select Resident</h2>
+
+              <span class="panel-tag" id="residentCountTag"> 0 residents </span>
+            </div>
+
+            <div class="resident-mini" id="selResidentMini" hidden>
+              <span class="avatar" id="selAvatar"> -- </span>
+
+              <div class="resident-mini-info">
+                <span class="resident-mini-name" id="selName"> â€” </span>
+
+                <span class="resident-mini-id" id="selId"> â€” </span>
+              </div>
+
+              <a href="#" class="resident-mini-change" id="changeResidentLink">
+                Change
+              </a>
+            </div>
+
+            <div id="residentSearchArea">
+              <div class="table-toolbar">
+                <input
+                  type="text"
+                  id="residentSearch"
+                  placeholder="Search by name or Account ID..."
+                />
+              </div>
+
+              <div class="activity-table-wrap">
+                <table class="activity-table">
+                  <thead>
+                    <tr>
+                      <th>Resident</th>
+                      <th>Purok</th>
+                      <th>Current EcoPoints</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="residentTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel scan-empty" id="noResidentState">
+            <i class="fa-solid fa-address-book"></i>
+
+            <span> No resident selected </span>
+
+            <p>Select a registered resident above to view their records.</p>
+          </div>
+
+          <div id="recordArea" hidden>
+            <div class="record-summary">
+              <div class="record-summary-card">
+                <span class="record-summary-label"> Current EcoPoints </span>
+
+                <span class="record-summary-value" id="recBalance">
+                  0 pts
+                </span>
+
+                <span class="record-summary-note" id="recPurok"> â€” </span>
+              </div>
+
+              <div class="record-summary-card">
+                <span class="record-summary-label"> EcoPoints Earned </span>
+
+                <span class="record-summary-value" id="recEarned"> 0 </span>
+
+                <span class="record-summary-note" id="recEarnedCount">
+                  0 records
+                </span>
+              </div>
+
+              <div class="record-summary-card">
+                <span class="record-summary-label"> EcoPoints Used </span>
+
+                <span class="record-summary-value" id="recUsed"> 0 </span>
+
+                <span class="record-summary-note" id="recUsedCount">
+                  0 redemptions
+                </span>
+              </div>
+
+              <div class="record-summary-card">
+                <span class="record-summary-label"> Waste Activity </span>
+
+                <span class="record-summary-value" id="recWasteCount"> 0 </span>
+
+                <span class="record-summary-note" id="recWasteNote">
+                  0 verified
+                </span>
+              </div>
+            </div>
+
+            <div class="record-grid">
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Waste Submitted</h2>
+
+                  <span class="panel-tag" id="submittedCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Waste Type</th>
+                        <th>Submitted Weight</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="submittedTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Waste Verified</h2>
+
+                  <span class="panel-tag" id="verifiedCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Waste Type</th>
+                        <th>Verified Weight</th>
+                        <th>EcoPoints</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="verifiedTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Rejected Submissions</h2>
+
+                  <span class="panel-tag" id="rejectedCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Waste Type</th>
+                        <th>Submitted Weight</th>
+                        <th>Reason</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="rejectedTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Reward Redemptions</h2>
+
+                  <span class="panel-tag" id="redemptionCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Reward</th>
+                        <th>Required EcoPoints</th>
+                        <th>Balance After</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="redemptionTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Collection History</h2>
+
+                  <span class="panel-tag" id="collectionCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Waste</th>
+                        <th>Weight</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="collectionTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="panel record-section">
+                <div class="panel-head">
+                  <h2>Transaction History</h2>
+
+                  <span class="panel-tag" id="transactionCountTag">
+                    0 records
+                  </span>
+                </div>
+
+                <div class="table-toolbar">
+                  <select id="transactionFilter">
+                    <option value="all">All Activity</option>
+
+                    <option value="earn">EcoPoints Earned</option>
+
+                    <option value="redemption">EcoPoints Used</option>
+                  </select>
+                </div>
+
+                <div class="activity-table-wrap">
+                  <table class="activity-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Points</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="transactionTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+    <script src="Resident EcoPoints Records.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+  </body>
+</html>

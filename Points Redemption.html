@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Points Redemption</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Collector Pages.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <style>
+      .redemption-section {
+        margin-top: var(--space-4);
+      }
+
+      .resident-selection {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .resident-search {
+        position: relative;
+      }
+
+      .resident-search i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+      }
+
+      .resident-search input {
+        width: 100%;
+        padding: 12px 14px 12px 40px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: var(--white);
+        font-family: var(--font-body);
+        font-size: 13px;
+        outline: none;
+      }
+
+      .resident-search input:focus {
+        border-color: var(--primary-green);
+      }
+
+      .resident-table-wrap {
+        overflow-x: auto;
+      }
+
+      .resident-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+      }
+
+      .resident-table th,
+      .resident-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+      }
+
+      .resident-table th {
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .resident-table td {
+        font-size: 12px;
+      }
+
+      .resident-table tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .resident-table strong {
+        color: var(--dark-green);
+      }
+
+      .resident-points {
+        font-weight: 800;
+        color: var(--primary-green);
+      }
+
+      .table-row-btn {
+        border: 1px solid var(--border);
+        background: var(--white);
+        border-radius: 8px;
+        padding: 7px 11px;
+        color: var(--primary-green);
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .table-row-btn:hover {
+        background: #f4f8f2;
+      }
+
+      .selected-resident {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px;
+        border-radius: 10px;
+        background: #f6f8f5;
+        border: 1px solid #e4e9e2;
+      }
+
+      .selected-resident .avatar {
+        flex-shrink: 0;
+      }
+
+      .selected-resident-info {
+        flex: 1;
+      }
+
+      .selected-resident-name {
+        display: block;
+        font-weight: 800;
+        color: var(--dark-green);
+      }
+
+      .selected-resident-id {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 3px;
+      }
+
+      .change-resident {
+        color: var(--primary-green);
+        font-size: 11px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .balance-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 18px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-green),
+          var(--dark-green)
+        );
+        color: var(--white);
+        margin-bottom: 16px;
+      }
+
+      .balance-label {
+        font-size: 11px;
+        opacity: 0.85;
+        font-weight: 700;
+      }
+
+      .balance-value {
+        font-family: var(--font-heading);
+        font-size: 30px;
+        font-weight: 700;
+        margin-top: 3px;
+      }
+
+      .balance-resident {
+        font-size: 12px;
+        text-align: right;
+        opacity: 0.9;
+      }
+
+      .reward-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .reward-card {
+        display: grid;
+        grid-template-columns: 45px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--white);
+      }
+
+      .reward-icon {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #f0f5ed;
+        color: var(--primary-green);
+        font-size: 18px;
+      }
+
+      .reward-name {
+        display: block;
+        color: var(--dark-green);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .reward-details {
+        display: flex;
+        gap: 13px;
+        flex-wrap: wrap;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .reward-cost {
+        color: var(--primary-green);
+        font-weight: 800;
+      }
+
+      .reward-stock {
+        font-weight: 700;
+      }
+
+      .reward-stock.out {
+        color: var(--danger);
+      }
+
+      .reward-action {
+        min-width: 90px;
+      }
+
+      .reward-action button {
+        width: 100%;
+      }
+
+      .reward-action button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      .redemption-empty {
+        text-align: center;
+        padding: 35px 15px;
+        color: var(--muted);
+      }
+
+      .redemption-empty i {
+        display: block;
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: var(--border);
+      }
+
+      .redemption-empty strong {
+        display: block;
+        color: var(--dark-text);
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      .redemption-empty p {
+        font-size: 12px;
+      }
+
+      .redemption-history {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .redemption-record {
+        display: grid;
+        grid-template-columns: 42px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 13px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .redemption-record:last-child {
+        border-bottom: 0;
+      }
+
+      .redemption-record-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f0f5ed;
+        color: var(--primary-green);
+      }
+
+      .redemption-record-name {
+        display: block;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--dark-green);
+      }
+
+      .redemption-record-meta {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 3px;
+      }
+
+      .redemption-record-points {
+        color: var(--danger);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 28, 10, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 1000;
+      }
+
+      .confirm-overlay.show {
+        display: flex;
+      }
+
+      .confirm-dialog {
+        width: min(460px, 100%);
+        background: var(--white);
+        border-radius: 15px;
+        padding: 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      }
+
+      .confirm-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef5e9;
+        color: var(--primary-green);
+        border-radius: 50%;
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .confirm-dialog h2 {
+        margin: 0 0 7px;
+      }
+
+      .confirm-dialog > p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .confirm-details {
+        margin: 16px 0;
+        padding: 14px;
+        background: #f7f9f7;
+        border: 1px solid #e6ebe5;
+        border-radius: 10px;
+      }
+
+      .confirm-detail {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 7px 0;
+        font-size: 12px;
+      }
+
+      .confirm-detail span:first-child {
+        color: var(--muted);
+      }
+
+      .confirm-detail span:last-child {
+        font-weight: 800;
+        color: var(--dark-green);
+        text-align: right;
+      }
+
+      .confirm-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .redemption-success {
+        display: none;
+        margin-top: var(--space-4);
+      }
+
+      .redemption-success.show {
+        display: block;
+      }
+
+      .success-content {
+        text-align: center;
+        padding: 15px;
+      }
+
+      .success-content i {
+        font-size: 40px;
+        color: var(--primary-green);
+        margin-bottom: 12px;
+      }
+
+      .success-content h2 {
+        margin-bottom: 8px;
+      }
+
+      .success-content p {
+        color: var(--muted);
+        font-size: 12px;
+        margin: 5px 0;
+      }
+
+      .success-content strong {
+        color: var(--dark-green);
+      }
+
+      .success-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 800px) {
+        .reward-card {
+          grid-template-columns: 42px 1fr;
+        }
+
+        .reward-action {
+          grid-column: 2;
+          width: 120px;
+        }
+
+        .balance-card {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .balance-resident {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a
+            href="Collector Dashboard.html"
+            class="nav-item"
+            data-label="Dashboard"
+          >
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a
+            href="QR Code Scanner.html"
+            class="nav-item"
+            data-label="QR Code Scanner"
+          >
+            <i class="fa-solid fa-qrcode"></i>
+            <span>QR Code Scanner</span>
+          </a>
+
+          <a
+            href="Waste Verification.html"
+            class="nav-item"
+            data-label="Waste Verification"
+          >
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span>Waste Verification</span>
+          </a>
+
+          <a
+            href="Points Redemption.html"
+            class="nav-item active"
+            data-label="Points Redemption"
+          >
+            <i class="fa-solid fa-gift"></i>
+            <span>Points Redemption</span>
+          </a>
+
+          <a
+            href="Collection History.html"
+            class="nav-item"
+            data-label="Collection History"
+          >
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Collection History</span>
+          </a>
+
+          <a
+            href="Resident EcoPoints Records.html"
+            class="nav-item"
+            data-label="Resident EcoPoints Records"
+          >
+            <i class="fa-solid fa-address-book"></i>
+            <span>Resident EcoPoints Records</span>
+          </a>
+
+          <a
+            href="Notifications.html"
+            class="nav-item"
+            data-label="Notifications"
+          >
+            <i class="fa-solid fa-bell"></i>
+            <span>Notifications</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item" data-label="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              placeholder="Search residents, rewards, transactions..."
+              id="redemptionSearch"
+            />
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">EC</span>
+                <span class="profile-name">EcoPoints Collector</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#">
+                  <i class="fa-solid fa-user"></i>
+                  View Profile
+                </a>
+
+                <a href="#">
+                  <i class="fa-solid fa-gear"></i>
+                  Settings
+                </a>
+
+                <a href="Registration.html">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-gift"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i>
+              Points Redemption
+            </h1>
+
+            <p>
+              Select a resident and process a reward redemption using their
+              EcoPoints balance.
+            </p>
+          </div>
+
+          <div class="panel-grid two-col">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Select Resident</h2>
+                <span class="panel-tag" id="residentCountTag">
+                  0 residents
+                </span>
+              </div>
+
+              <div id="residentSelection">
+                <div class="resident-selection">
+                  <div class="resident-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                      type="text"
+                      id="residentSearch"
+                      placeholder="Search resident name or ID..."
+                    />
+                  </div>
+
+                  <div class="resident-table-wrap">
+                    <table class="resident-table">
+                      <thead>
+                        <tr>
+                          <th>Resident</th>
+                          <th>Area</th>
+                          <th>EcoPoints</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+
+                      <tbody id="residentTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div id="selectedResidentPanel" hidden>
+                <div class="selected-resident">
+                  <span class="avatar" id="selectedAvatar"> -- </span>
+
+                  <div class="selected-resident-info">
+                    <span
+                      class="selected-resident-name"
+                      id="selectedResidentName"
+                    >
+                      â€”
+                    </span>
+
+                    <span class="selected-resident-id" id="selectedResidentId">
+                      â€”
+                    </span>
+                  </div>
+
+                  <a href="#" class="change-resident" id="changeResident">
+                    Change
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Available Rewards</h2>
+                <span class="panel-tag"> Required EcoPoints </span>
+              </div>
+
+              <div id="noResidentState" class="redemption-empty">
+                <i class="fa-solid fa-user-check"></i>
+
+                <strong> No resident selected. </strong>
+
+                <p>Select a resident to view available rewards.</p>
+              </div>
+
+              <div id="rewardArea" hidden>
+                <div class="balance-card">
+                  <div>
+                    <div class="balance-label">Current EcoPoints</div>
+
+                    <div class="balance-value" id="currentBalance">0 pts</div>
+                  </div>
+
+                  <div class="balance-resident" id="balanceResident">â€”</div>
+                </div>
+
+                <div id="redemptionMessage" class="form-note"></div>
+
+                <div class="reward-list" id="rewardList"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel redemption-section">
+            <div class="panel-head">
+              <h2>Redemption Records</h2>
+              <span class="panel-tag"> Completed redemptions </span>
+            </div>
+
+            <div class="redemption-history" id="redemptionHistory"></div>
+          </div>
+
+          <div class="panel redemption-success" id="redemptionSuccess">
+            <div class="success-content">
+              <i class="fa-solid fa-circle-check"></i>
+
+              <h2>Redemption Confirmed</h2>
+
+              <p id="successMessage"></p>
+
+              <p id="successTransaction"></p>
+
+              <div class="success-actions">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="newRedemptionBtn"
+                >
+                  <i class="fa-solid fa-gift"></i>
+                  Process Another
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="confirm-overlay" id="confirmOverlay">
+      <div
+        class="confirm-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmTitle"
+      >
+        <div class="confirm-icon">
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <h2 id="confirmTitle">Confirm Redemption</h2>
+
+        <p>Please review the redemption details before confirming.</p>
+
+        <div class="confirm-details">
+          <div class="confirm-detail">
+            <span>Resident</span>
+            <span id="confirmResident">â€”</span>
+          </div>
+
+          <div class="confirm-detail">
+            <span>Reward</span>
+            <span id="confirmReward">â€”</span>
+          </div>
+
+          <div class="confirm-detail">
+            <span>Required EcoPoints</span>
+            <span id="confirmCost">â€”</span>
+          </div>
+
+          <div class="confirm-detail">
+            <span>Current Balance</span>
+            <span id="confirmBalance">â€”</span>
+          </div>
+
+          <div class="confirm-detail">
+            <span>Balance After Redemption</span>
+            <span id="confirmRemaining">â€”</span>
+          </div>
+
+          <div class="confirm-detail">
+            <span>Reward Stock</span>
+            <span id="confirmStock">â€”</span>
+          </div>
+        </div>
+
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-outline" id="cancelConfirm">
+            Cancel
+          </button>
+
+          <button type="button" class="btn btn-primary" id="confirmRedemption">
+            <i class="fa-solid fa-check"></i>
+            Confirm Redemption
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+    <script src="Points Redemption.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+  </body>
+</html>

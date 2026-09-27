@@ -1,0 +1,426 @@
+<!-- Leaderboard Page HTML -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Leaderboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Resident Pages.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+          </a>
+
+          <a href="My QR Code.html" class="nav-item" data-label="My QR Code">
+            <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+          </a>
+
+          <a
+            href="My EcoPoints.html"
+            class="nav-item"
+            data-label="My EcoPoints"
+          >
+            <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+          </a>
+
+          <a href="Rewards.html" class="nav-item" data-label="Rewards">
+            <i class="fa-solid fa-gift"></i><span>Rewards</span>
+          </a>
+
+          <a
+            href="Collection Schedule.html"
+            class="nav-item"
+            data-label="Collection Schedule"
+          >
+            <i class="fa-solid fa-calendar-days"></i
+            ><span>Collection Schedule</span>
+          </a>
+
+          <a
+            href="Notifications.html"
+            class="nav-item"
+            data-label="Notifications"
+          >
+            <i class="fa-solid fa-bell"></i><span>Notifications</span>
+            <span class="nav-badge" style="display: none">0</span>
+          </a>
+
+          <a
+            href="Achievements.html"
+            class="nav-item"
+            data-label="Achievements"
+          >
+            <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+          </a>
+
+          <a
+            href="Leaderboard.html"
+            class="nav-item active"
+            data-label="Leaderboard"
+          >
+            <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+          </a>
+
+          <a href="Profile.html" class="nav-item" data-label="Profile">
+            <i class="fa-solid fa-user"></i><span>Profile</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Main -->
+      <div class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+         <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+          
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">JD</span>
+                <span class="profile-name">Juan Dela Cruz</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="Profile.html"
+                  ><i class="fa-solid fa-user"></i> View Profile</a
+                >
+                <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="Registration.html"
+                  ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-ranking-star"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i
+              >Leaderboard
+            </h1>
+            <p>
+              See how your household ranks among recycling residents in the
+              barangay.
+            </p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Barangay Leaderboard</h2>
+              <span class="panel-tag">Ranked by EcoPoints earned</span>
+            </div>
+
+            <div class="filter-tabs" style="margin-bottom: var(--space-2)">
+              <button class="filter-btn active" data-range="month">
+                This Month
+              </button>
+              <button class="filter-btn" data-range="alltime">All Time</button>
+            </div>
+
+            <div class="leaderboard-list" id="leaderboardList"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="Notification Center.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+    <script>
+      function getRegisteredLeaderboardResidents() {
+        const users = (() => {
+          try {
+            async function loadLeaderboardFromMysql() {
+  try {
+    const res = await fetch('/api/leaderboard');
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Failed to load leaderboard');
+    }
+    return data.leaderboard || [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+async function renderLeaderboard() {
+  const list = document.getElementById('leaderboardList');
+  if (!list) return;
+
+  const entries = await loadLeaderboardFromMysql();
+
+  if (!entries.length) {
+    list.innerHTML = `<div class="scan-empty"><span>No leaderboard records yet</span></div>`;
+    return;
+  }
+
+  list.innerHTML = entries.map((entry) => `
+    <div class="leaderboard-row">
+      <div class="lb-rank">#${entry.rank}</div>
+      <div class="lb-name">
+        <strong>${entry.name}</strong>
+        <span>${entry.accountId || ''}</span>
+      </div>
+      <div class="lb-points">${Number(entry.points).toLocaleString()} pts</div>
+    </div>
+  `).join('');
+}
+
+renderLeaderboard();
+            return value && typeof value === "object" && !Array.isArray(value)
+              ? value
+              : {};
+          } catch {
+            return {};
+          }
+        })();
+
+        return Object.values(users)
+          .filter((user) => user && user.role === "resident" && user.userId)
+          .map((user) => ({
+            name:
+              `${user.fname || ""} ${user.lname || ""}`.trim() || "Resident",
+
+            initials: `${user.fname || ""}${user.lname || ""}`
+              .replace(/\s/g, "")
+              .slice(0, 2)
+              .toUpperCase(),
+
+            points: Array.isArray(user.history)
+              ? user.history
+                  .filter((entry) => entry && Number(entry.points) > 0)
+                  .reduce((sum, entry) => sum + Number(entry.points || 0), 0)
+              : 0,
+
+            userId: user.userId,
+          }));
+      }
+
+      function isSameMonthDate(dateStr, referenceDate) {
+        const date = new Date(dateStr);
+
+        if (Number.isNaN(date.getTime())) {
+          return false;
+        }
+
+        return (
+          date.getFullYear() === referenceDate.getFullYear() &&
+          date.getMonth() === referenceDate.getMonth()
+        );
+      }
+
+      function earnedPointsForResident(resident, range) {
+        const users = (() => {
+          try {
+            const value = JSON.parse(localStorage.getItem("ecoUsers"));
+
+            return value && typeof value === "object" && !Array.isArray(value)
+              ? value
+              : {};
+          } catch {
+            return {};
+          }
+        })();
+
+        const user = Object.values(users).find(
+          (item) => item && item.userId === resident.userId,
+        );
+
+        if (!user || !Array.isArray(user.history)) {
+          return 0;
+        }
+
+        const now = new Date();
+
+        return user.history
+          .filter((entry) => entry && Number(entry.points) > 0)
+          .filter((entry) =>
+            range === "month" ? isSameMonthDate(entry.date, now) : true,
+          )
+          .reduce((sum, entry) => sum + Number(entry.points || 0), 0);
+      }
+
+      function buildLeaderboard(range) {
+        const residents = getRegisteredLeaderboardResidents();
+
+        return residents
+          .map((resident) => ({
+            ...resident,
+            points: earnedPointsForResident(resident, range),
+            you:
+              typeof getUserId === "function" &&
+              String(resident.userId) === String(getUserId()),
+          }))
+          .filter((resident) => resident.points > 0)
+          .sort((a, b) => b.points - a.points)
+          .map((entry, index) => ({
+            ...entry,
+            rank: index + 1,
+          }));
+      }
+
+      function rankClass(rank) {
+        if (rank === 1) {
+          return "lb-rank top1";
+        }
+
+        if (rank === 2) {
+          return "lb-rank top2";
+        }
+
+        if (rank === 3) {
+          return "lb-rank top3";
+        }
+
+        return "lb-rank";
+      }
+
+      function renderLeaderboard(range) {
+        const data = buildLeaderboard(range);
+
+        const list = document.getElementById("leaderboardList");
+
+        if (!data.length) {
+          list.innerHTML = `
+        <div class="scan-empty">
+          <i class="fa-solid fa-ranking-star"></i>
+          <span>No leaderboard records yet</span>
+          <p>
+            Residents will appear here after
+            they earn EcoPoints through actual
+            verified recycling activity.
+          </p>
+        </div>
+      `;
+
+          return;
+        }
+
+        list.innerHTML = data
+          .map(
+            (entry) => `
+            <div class="leaderboard-row">
+              <div class="${rankClass(entry.rank)}">
+                ${entry.rank}
+              </div>
+
+              <div class="lb-avatar">
+                ${entry.initials}
+              </div>
+
+              <div class="lb-info">
+                <span class="lb-name">
+                  ${entry.name}
+                  ${entry.you ? "<small>You</small>" : ""}
+                </span>
+              </div>
+
+              <div class="lb-points">
+                ${entry.points.toLocaleString()}
+                <span>pts</span>
+              </div>
+            </div>
+          `,
+          )
+          .join("");
+      }
+
+      document.querySelectorAll(".filter-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((item) => item.classList.remove("active"));
+
+          button.classList.add("active");
+
+          renderLeaderboard(button.dataset.range);
+        });
+      });
+
+      renderLeaderboard("month");
+
+      window.addEventListener("storage", (event) => {
+        if (
+          event.key === "ecoUsers" ||
+          event.key === "ecoTransactions" ||
+          event.key === "ecoWasteQueue"
+        ) {
+          const active = document.querySelector(".filter-btn.active");
+
+          renderLeaderboard(active?.dataset.range || "month");
+        }
+      });
+    </script>
+  </body>
+</html>

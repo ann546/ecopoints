@@ -1,0 +1,107 @@
+<!-- Collector Login Page HTML -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Staff Log In</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="Main Page.css?v=muhcihad9">
+<link rel="stylesheet" href="Registration.css?v=muhcihad9">
+  <!-- Build stamp: proves which copy of this page the browser loaded. -->
+  <meta name="eco-build" content="build-muhcuya9">
+  <link rel="stylesheet" href="data:text/css," id="ecoBuildBadge">
+  <style>
+    #ecoBuildBadge { display: none; }
+    body::after {
+      content: "build-muhcuya9";
+      position: fixed; bottom: 2px; right: 4px;
+      font: 9px/1.2 monospace; color: #9aa79b;
+      opacity: .45; pointer-events: none; z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a href="Main Page.html" class="logo">
+      <span class="logo-badge"><img src="logo.png" alt="EcoPoints logo"></span>
+      EcoPoints
+    </a>
+    <a href="Main Page.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-shell">
+
+    <aside class="auth-brand">
+      <div class="auth-blob" aria-hidden="true"></div>
+      <div class="auth-brand-inner">
+        <span class="eyebrow"><i class="fa-solid fa-shield-halved"></i> Barangay Recycling Program</span>
+        <h1>Staff<br>sign in.</h1>
+        <p>Log in with your collector or admin account to manage EcoPoints operations for the barangay.</p>
+
+        <ul class="auth-perks">
+          <li><i class="fa-solid fa-qrcode"></i> Collectors: scan resident QR codes on pickup day</li>
+          <li><i class="fa-solid fa-clipboard-check"></i> Collectors: verify waste and compute EcoPoints</li>
+          <li><i class="fa-solid fa-calendar-days"></i> Admins: post and manage collection schedules</li>
+          <li><i class="fa-solid fa-shield-halved"></i> Access limited to authorized collector and admin staff</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-role="collector" role="tab" aria-selected="true">Collector</button>
+        <button type="button" class="tab-btn" data-role="admin" role="tab" aria-selected="false">Admin</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="auth-form active" novalidate>
+        <h2 id="loginHeading">Collector Log In</h2>
+        <p class="form-sub" id="loginSub">Log in with your collector account to open your dashboard.</p>
+
+        <div class="field">
+          <label for="loginEmail">Email address</label>
+          <input type="email" id="loginEmail" placeholder="you@gmail.com" autocomplete="email">
+          <span class="field-error" id="loginEmailError"></span>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password">
+            <button type="button" class="toggle-pw" data-target="loginPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <span class="field-error" id="loginPasswordError"></span>
+        </div>
+
+        <div class="field-row">
+          <label class="checkbox">
+            <input type="checkbox" id="rememberMe">
+            <span>Remember me</span>
+          </label>
+          <a class="link-muted" href="ForgotPassword.html">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="loginSubmit">
+          <span class="btn-label">Log In</span>
+        </button>
+
+        <p class="form-note" id="loginNote"></p>
+      </form>
+
+      <p class="switch-line">Not staff? <a href="Registration.html" class="switch-btn" style="text-decoration:none;">Go to resident log in</a></p>
+    </section>
+  </div>
+</main>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="auth-common.js?v=muhcihad9"></script>
+<script src="Collector Login.js?v=muhcihad9"></script>
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Collection Schedule</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Collector Pages.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <style>
+      .schedule-toolbar {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) 180px 180px;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .schedule-toolbar input,
+      .schedule-toolbar select {
+        width: 100%;
+        min-height: 42px;
+        padding: 0 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--white);
+        color: var(--dark-text);
+        font: inherit;
+        font-size: 12px;
+      }
+
+      .schedule-toolbar input:focus,
+      .schedule-toolbar select:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 3px rgba(118, 152, 38, 0.12);
+      }
+
+      .schedule-table-wrap {
+        overflow-x: auto;
+      }
+
+      .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 980px;
+      }
+
+      .schedule-table th,
+      .schedule-table td {
+        padding: 13px 10px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      .schedule-table th {
+        color: var(--muted);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .schedule-table td {
+        font-size: 11px;
+        color: var(--dark-text);
+      }
+
+      .schedule-table tbody tr:hover {
+        background: #fafbf9;
+      }
+
+      .schedule-date {
+        font-weight: 800;
+        color: var(--dark-green);
+      }
+
+      .schedule-area {
+        font-weight: 800;
+        color: var(--dark-green);
+      }
+
+      .schedule-route {
+        color: var(--muted);
+      }
+
+      .schedule-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: rgba(118, 152, 38, 0.12);
+        color: var(--primary-green);
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .schedule-status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .schedule-status.completed {
+        background: #eaf5e9;
+        color: #36733a;
+      }
+
+      .schedule-status.pending {
+        background: rgba(255, 157, 77, 0.15);
+        color: #b76820;
+      }
+
+      .schedule-empty {
+        text-align: center;
+        padding: 48px 20px !important;
+        color: var(--muted);
+      }
+
+      .schedule-empty i {
+        display: block;
+        font-size: 30px;
+        color: var(--border);
+        margin-bottom: 10px;
+      }
+
+      .schedule-empty strong {
+        display: block;
+        color: var(--dark-text);
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .schedule-empty span {
+        font-size: 11px;
+      }
+
+      @media (max-width: 760px) {
+        .schedule-toolbar {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a href="Collector Dashboard.html" class="nav-item">
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="QR Code Scanner.html" class="nav-item">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>QR Code Scanner</span>
+          </a>
+
+          <a href="Collector Collection Schedule.html" class="nav-item active">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Collection Schedule</span>
+          </a>
+
+          <a href="Waste Verification.html" class="nav-item">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span>Waste Verification</span>
+          </a>
+
+          <a href="Collection History.html" class="nav-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Collection History</span>
+          </a>
+
+          <a href="Resident EcoPoints Records.html" class="nav-item">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Resident EcoPoints Records</span>
+          </a>
+
+          <a href="Notifications.html" class="nav-item">
+            <i class="fa-solid fa-bell"></i>
+            <span>Notifications</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="globalSearch"
+              placeholder="Search residents, waste records, transactions..."
+            />
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">EC</span>
+                <span class="profile-name">EcoPoints Collector</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#">
+                  <i class="fa-solid fa-user"></i>
+                  View Profile
+                </a>
+
+                <a href="#">
+                  <i class="fa-solid fa-gear"></i>
+                  Settings
+                </a>
+
+                <a href="Registration.html">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-calendar-days"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i>
+              Collection Schedule
+            </h1>
+
+            <p>
+              View your assigned collection schedules and actual collection
+              requests.
+            </p>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon icon-lightgreen">
+                <i class="fa-solid fa-recycle"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label">Collections Recorded</span>
+                <span class="stat-value" id="totalRequests">0</span>
+                <span class="stat-trend neutral">assigned requests</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-green">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label">Completed Collections</span>
+                <span class="stat-value" id="completedRequests">0</span>
+                <span class="stat-trend up">completed requests</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-orange">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label">Pending Collections</span>
+                <span class="stat-value" id="pendingRequests">0</span>
+                <span class="stat-trend neutral">pending requests</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-dark">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label">Scheduled Areas</span>
+                <span class="stat-value" id="scheduledAreas">0</span>
+                <span class="stat-trend neutral">assigned areas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Assigned Collection Schedule</h2>
+
+              <span class="panel-tag" id="scheduleCount"> 0 collection days </span>
+            </div>
+
+            <p
+              style="
+                font-size: 13px;
+                color: var(--muted);
+                margin-top: -10px;
+                margin-bottom: 18px;
+              "
+            >
+              Schedules follow the collector group and street schedule set by the Admin.
+            </p>
+
+            <div id="calendarWrap">
+              <div class="cal-toolbar">
+                <div class="cal-nav">
+                  <button type="button" class="cal-nav-btn" id="calPrev" aria-label="Previous month">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+
+                  <span class="cal-title" id="calTitle"></span>
+
+                  <button type="button" class="cal-nav-btn" id="calNext" aria-label="Next month">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+
+                  <button type="button" class="cal-today-btn" id="calToday">Today</button>
+                </div>
+
+                <input type="date" id="dateFilter" aria-label="Jump to date" />
+              </div>
+
+              <div class="cal-weekdays">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
+              </div>
+
+              <div class="cal-grid" id="calendarGrid"></div>
+
+              <div class="day-detail" id="dayDetail"></div>
+            </div>
+
+            <div class="schedule-empty" id="emptyState">
+              <i class="fa-regular fa-calendar-xmark"></i>
+
+              <strong id="emptyTitle"> No collector group assigned yet. </strong>
+
+              <span id="emptyMessage">
+                No assigned collection schedules are available.
+              </span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="auth-common.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+    <script src="Caniogan Streets.js?v=muhcihad9"></script>
+    <script src="Collector Collection Schedule.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+  </body>
+</html>

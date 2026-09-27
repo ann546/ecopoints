@@ -1,0 +1,547 @@
+<!-- QR Code Scanner Page HTML -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | QR Code Scanner</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Collector Pages.css?v=muhcihad9" />
+    <link rel="stylesheet" href="QR Code Scanner.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a
+            href="Collector Dashboard.html"
+            class="nav-item"
+            data-label="Dashboard"
+          >
+            <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+          </a>
+
+          <a href="#" class="nav-item active" data-label="QR Code Scanner">
+            <i class="fa-solid fa-qrcode"></i><span>QR Code Scanner</span>
+          </a>
+
+          <a
+            href="Waste Verification.html"
+            class="nav-item"
+            data-label="Waste Verification"
+          >
+            <i class="fa-solid fa-clipboard-check"></i
+            ><span>Waste Verification</span>
+          </a>
+
+          <a
+            href="Collection History.html"
+            class="nav-item"
+            data-label="Collection History"
+          >
+            <i class="fa-solid fa-clock-rotate-left"></i
+            ><span>Collection History</span>
+          </a>
+
+          <a
+            href="Resident EcoPoints Records.html"
+            class="nav-item"
+            data-label="Resident EcoPoints Records"
+          >
+            <i class="fa-solid fa-address-book"></i
+            ><span>Resident EcoPoints Records</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item" data-label="Settings">
+            <i class="fa-solid fa-gear"></i><span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Main -->
+      <div class="main">
+        <!-- Top nav -->
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">--</span>
+                <span class="profile-name">Account</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#"><i class="fa-solid fa-user"></i> View Profile</a>
+                <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="Registration.html"
+                  ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-qrcode"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i>
+              QR Code Scanner
+            </h1>
+
+            <p>
+              Scan a resident's QR code to view their account and collection
+              activity. Scanning does not create a waste or collection record.
+            </p>
+          </div>
+
+          <div class="panel-grid two-col">
+            <!-- Scan panel -->
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Scan a Resident</h2>
+                <span class="panel-tag" id="scanModeTag">Camera idle</span>
+              </div>
+
+              <div class="scanner-frame">
+                <div id="qrReader" class="scanner-video"></div>
+
+                <div class="scanner-corner tl"></div>
+                <div class="scanner-corner tr"></div>
+                <div class="scanner-corner bl"></div>
+                <div class="scanner-corner br"></div>
+
+                <div class="scanner-placeholder" id="scannerPlaceholder">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Camera preview appears here</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-block" id="toggleCameraBtn">
+                <i class="fa-solid fa-camera"></i>
+                Start Camera Scan
+              </button>
+
+              <p class="form-note" id="cameraNote"></p>
+
+              <div class="scan-divider">
+                <span>OR</span>
+              </div>
+
+              <button class="btn btn-outline btn-block" id="uploadQrBtn">
+                <i class="fa-solid fa-file-image"></i>
+                Upload QR Code Image
+              </button>
+
+              <input
+                type="file"
+                id="uploadQrInput"
+                accept="image/*"
+                hidden
+              />
+
+              <p class="form-note" id="uploadQrNote"></p>
+
+              <div class="scan-divider">
+                <span>OR</span>
+              </div>
+
+              <div class="manual-entry">
+                <div class="field">
+                  <label for="manualIdInput">Resident Account ID</label>
+
+                  <input
+                    type="text"
+                    id="manualIdInput"
+                    placeholder="e.g. ECO-2026-0043"
+                  />
+                </div>
+
+                <button class="btn btn-outline btn-block" id="manualLookupBtn">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  Look Up Resident
+                </button>
+
+                <p class="field-hint">
+                  Manual lookup only displays the resident account. It does not
+                  count as a QR scan or create a waste record.
+                </p>
+              </div>
+            </div>
+
+            <!-- Result panel -->
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Scan Result</h2>
+              </div>
+
+              <div class="scan-empty" id="scanEmptyState">
+                <i class="fa-solid fa-id-card"></i>
+
+                <span>No resident scanned yet</span>
+
+                <p>
+                  Results will appear here once a QR code is scanned or an
+                  Account ID is looked up.
+                </p>
+              </div>
+
+              <div class="resident-result" id="residentResult" hidden>
+                <!-- Resident heading -->
+                <div class="resident-result-head">
+                  <span class="avatar avatar-lg" id="resultAvatar"> -- </span>
+
+                  <div class="resident-result-info">
+                    <span class="resident-result-name" id="resultName">
+                      &mdash;
+                    </span>
+
+                    <span class="resident-result-id" id="resultId">
+                      &mdash;
+                    </span>
+                  </div>
+
+                  <span class="badge badge-verified" id="resultBadge">
+                    Found
+                  </span>
+                </div>
+
+                <!-- Main resident stats -->
+                <div class="resident-result-stats">
+                  <div class="resident-result-stat">
+                    <span class="rr-label"> Current EcoPoints </span>
+
+                    <span class="rr-value" id="resultPoints"> &mdash; </span>
+                  </div>
+
+                  <div class="resident-result-stat">
+                    <span class="rr-label"> Member Since </span>
+
+                    <span class="rr-value" id="resultSince"> &mdash; </span>
+                  </div>
+
+                  <div class="resident-result-stat">
+                    <span class="rr-label"> Purok / Zone </span>
+
+                    <span class="rr-value" id="resultPurok"> &mdash; </span>
+                  </div>
+
+                  <div class="resident-result-stat">
+                    <span class="rr-label"> Last Collection </span>
+
+                    <span class="rr-value" id="resultLast"> &mdash; </span>
+                  </div>
+                </div>
+
+                <!-- Account information -->
+                <div class="scanner-info-section">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-id-card"></i>
+                      Account Information
+                    </h3>
+                  </div>
+
+                  <div class="account-info-grid">
+                    <div class="account-info-item">
+                      <span class="rr-label"> Email </span>
+
+                      <span class="rr-value" id="resultEmail"> &mdash; </span>
+                    </div>
+
+                    <div class="account-info-item">
+                      <span class="rr-label"> Mobile </span>
+
+                      <span class="rr-value" id="resultPhone"> &mdash; </span>
+                    </div>
+
+                    <div class="account-info-item account-info-wide">
+                      <span class="rr-label"> Address </span>
+
+                      <span class="rr-value" id="resultAddress"> &mdash; </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Recent waste submissions -->
+                <div class="scanner-info-section">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-recycle"></i>
+                      Recent Waste Submissions
+                    </h3>
+
+                    <span class="panel-tag" id="submissionCountTag">
+                      0 records
+                    </span>
+                  </div>
+
+                  <div
+                    class="submission-list compact-list"
+                    id="residentSubmissionsList"
+                  ></div>
+                </div>
+
+                <!-- Pending submissions -->
+                <div class="scanner-info-section">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-gift"></i>
+                      Point Notifications
+                    </h3>
+
+                    <span class="panel-tag" id="redemptionNotificationTag">
+                      0 notifications
+                    </span>
+                  </div>
+
+                  <div
+                    class="redemption-activity-list compact-list"
+                    id="residentRedemptionList"
+                  ></div>
+                </div>
+
+                <div class="scanner-info-section">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-circle-check"></i>
+                      Redeem Verification
+                    </h3>
+
+                    <span class="panel-tag" id="redemptionVerificationTag">
+                      0 pending
+                    </span>
+                  </div>
+
+                  <div
+                    class="redemption-activity-list compact-list"
+                    id="residentRedemptionVerificationList"
+                  ></div>
+                </div>
+
+                <!-- Collection information -->
+                <div class="scanner-info-section">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-truck"></i>
+                      Collection / Request Information
+                    </h3>
+                  </div>
+
+                  <div class="collection-info-card" id="residentCollectionInfo">
+                    <div class="empty-note">
+                      No collection or request records yet.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="scanner-processing-panel" id="processingPanel">
+                  <div class="scanner-section-head">
+                    <h3>
+                      <i class="fa-solid fa-clipboard-check"></i>
+                      Process Collection
+                    </h3>
+
+                    <span class="panel-tag" id="processingStatusTag">
+                      New collection
+                    </span>
+                  </div>
+
+                  <form id="collectionProcessForm" class="scanner-process-form">
+                    <div class="process-form-grid">
+                      <div class="field">
+                        <label for="processWasteType">Waste Type</label>
+
+                        <select id="processWasteType" required>
+                          <option value="">Select waste type</option>
+                          <option value="Paper">Paper</option>
+                          <option value="Plastic">Plastic</option>
+                          <option value="Metal">Metal</option>
+                          <option value="Glass">Glass</option>
+                          <option value="E-Waste">E-Waste</option>
+                          <option value="Mixed">Mixed</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="processWeightKg">Actual Weight (kg)</label>
+
+                        <input
+                          type="number"
+                          id="processWeightKg"
+                          min="0.1"
+                          step="0.1"
+                          placeholder="Enter kilos"
+                          required
+                        />
+                      </div>
+
+                      <div class="field">
+                        <label for="processCondition">Waste Condition</label>
+
+                        <select id="processCondition" required>
+                          <option value="Clean & Sorted">Clean & Sorted</option>
+                          <option value="Needs Sorting">Needs Sorting</option>
+                          <option value="Contaminated">Contaminated</option>
+                        </select>
+                      </div>
+
+                    </div>
+
+                    <p class="form-note" id="processingNote"></p>
+
+                    <div class="resident-result-actions">
+                      <button type="submit" class="btn btn-primary btn-block" id="processConfirmBtn">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Verify & Issue EcoPoints
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-block"
+                        id="processRejectBtn"
+                        hidden
+                      >
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        Reject Pending Submission
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline btn-block"
+                        id="proceedBtn"
+                      >
+                        <i class="fa-solid fa-plus"></i>
+                        Process New Collection
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="resident-result-actions">
+                  <button class="btn btn-outline btn-block" id="scanAnotherBtn">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Scan Another
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent scans -->
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Recent Scans</h2>
+
+              <a href="Collection History.html" class="panel-link">
+                View all
+              </a>
+            </div>
+
+            <div class="submission-list" id="recentScansList">
+              <!-- populated by QR Code Scanner.js -->
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+
+    <script src="html5-qrcode.min.js?v=muhd4z14"></script>
+
+    <script src="QR Code Scanner.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+
+    <!-- Topbar identity -->
+    <script>
+      (function syncTopbarIdentity() {
+        const avatarEl = document.querySelector(".profile-btn .avatar");
+        const nameEl = document.querySelector(".profile-name");
+
+        if (!avatarEl || !nameEl) return;
+
+        let session = null;
+
+        try {
+          session = EcoSession();
+        } catch {}
+
+        if (session && session.fname && session.lname) {
+          avatarEl.textContent = (
+            session.fname[0] + session.lname[0]
+          ).toUpperCase();
+
+          nameEl.textContent = `${session.fname} ${session.lname}`;
+        } else if (typeof getUserName === "function") {
+          const demoName = getUserName();
+
+          const parts = demoName.trim().split(" ").filter(Boolean);
+
+          avatarEl.textContent = parts
+            .map((p) => p[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+
+          nameEl.textContent = demoName;
+        }
+      })();
+    </script>
+  </body>
+</html>

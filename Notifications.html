@@ -1,0 +1,491 @@
+<!-- Notifications Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Notifications</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="User Dashboard.css?v=muhcihad9">
+<link rel="stylesheet" href="Resident Pages.css?v=muhcihad9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+  .notif-insight{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-3);
+    flex-wrap:wrap;
+    padding:var(--space-3) var(--space-4);
+    border-radius:var(--radius-lg);
+    color:var(--white);
+    background:linear-gradient(120deg,var(--dark-green),var(--primary-green));
+    box-shadow:var(--shadow-md);
+  }
+
+  .notif-insight::after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-60px;
+    top:-110px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    pointer-events:none;
+  }
+
+  .ni-copy{
+    position:relative;
+    z-index:1;
+    flex:1;
+    min-width:240px;
+  }
+
+  .ni-kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    opacity:.85;
+  }
+
+  .ni-copy h3{
+    font-family:var(--font-heading);
+    font-size:21px;
+    margin:6px 0 12px;
+    color:var(--white);
+  }
+
+  .ni-track{
+    height:10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.22);
+    overflow:hidden;
+    max-width:460px;
+  }
+
+  .ni-fill{
+    height:100%;
+    width:0;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--light-green),#fff);
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .ni-meta{
+    display:block;
+    margin-top:8px;
+    font-size:12.5px;
+    font-weight:700;
+    opacity:.9;
+  }
+
+  .ni-btn{
+    position:relative;
+    z-index:1;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 20px;
+    border-radius:999px;
+    background:var(--white);
+    color:var(--dark-green);
+    font-weight:800;
+    font-size:13.5px;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+
+  .ni-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+  }
+
+  .notif-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .notif-actions .btn-small:disabled{
+    opacity:.45;
+    cursor:default;
+    transform:none;
+  }
+
+  .notif-toolbar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:var(--space-2);
+  }
+
+  .notif-search{
+    position:relative;
+    flex:1;
+    min-width:220px;
+  }
+
+  .notif-search i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  .notif-search input{
+    width:100%;
+    padding:11px 14px 11px 38px;
+    border:1.5px solid var(--border);
+    border-radius:999px;
+    background:var(--light-gray);
+    font:inherit;
+    font-size:13px;
+    color:var(--dark-text);
+    outline:none;
+    transition:border-color .2s ease,background .2s ease,box-shadow .2s ease;
+  }
+
+  .notif-search input:focus{
+    border-color:var(--primary-green);
+    background:var(--white);
+    box-shadow:0 0 0 4px rgba(118,152,38,.12);
+  }
+
+  .notif-chips{
+    flex-wrap:wrap;
+  }
+
+  .chip-count{
+    display:inline-block;
+    min-width:20px;
+    margin-left:6px;
+    padding:1px 6px;
+    border-radius:999px;
+    background:rgba(0,0,0,.08);
+    font-size:11px;
+    line-height:18px;
+    text-align:center;
+  }
+
+  .filter-btn.active .chip-count{
+    background:rgba(255,255,255,.25);
+  }
+
+  @media (max-width:700px){
+    .notif-chips{
+      width:100%;
+    }
+    .notif-insight{
+      padding:var(--space-3);
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoPoints</span>
+    </div>
+
+    <nav class="side-nav">
+
+      <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+        <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+      </a>
+
+      <a href="My QR Code.html" class="nav-item" data-label="My QR Code">
+        <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+      </a>
+
+      <a href="My EcoPoints.html" class="nav-item" data-label="My EcoPoints">
+        <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+      </a>
+
+      <a href="Rewards.html" class="nav-item" data-label="Rewards">
+        <i class="fa-solid fa-gift"></i><span>Rewards</span>
+      </a>
+
+      <a href="Collection Schedule.html" class="nav-item" data-label="Collection Schedule">
+        <i class="fa-solid fa-calendar-days"></i><span>Collection Schedule</span>
+      </a>
+
+      <a href="Notifications.html" class="nav-item active" data-label="Notifications">
+        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+        <span class="nav-badge" style="display:none;">0</span>
+      </a>
+
+      <a href="Achievements.html" class="nav-item" data-label="Achievements">
+        <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+      </a>
+
+      <a href="Leaderboard.html" class="nav-item" data-label="Leaderboard">
+        <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+      </a>
+
+      <a href="Profile.html" class="nav-item" data-label="Profile">
+        <i class="fa-solid fa-user"></i><span>Profile</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      
+
+    </nav>
+
+    <a href="Registration.html" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <header class="topbar">
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+    
+
+      <div class="topbar-actions">
+
+        
+
+        <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="dot"></span>
+        </button>
+
+        <div class="profile-menu" id="profileMenu">
+          <button class="profile-btn" id="profileBtn">
+            <span class="avatar">JD</span>
+            <span class="profile-name">Juan Dela Cruz</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <a href="Profile.html"><i class="fa-solid fa-user"></i> View Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="Registration.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-heading">
+        <h1><i class="fa-solid fa-bell" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>Notifications</h1>
+        <p>Everything happening with your recycling: pickups, verifications, points, and rewards.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon icon-orange"><i class="fa-solid fa-bell"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Unread</span>
+            <span class="stat-value" id="statUnread">0</span>
+            <span class="stat-trend neutral" id="statUnreadNote">All caught up</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-green"><i class="fa-solid fa-inbox"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">All Notifications</span>
+            <span class="stat-value" id="statTotal">0</span>
+            <span class="stat-trend neutral">in your inbox</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-lightgreen"><i class="fa-solid fa-calendar-week"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Last 7 Days</span>
+            <span class="stat-value" id="statWeek">0</span>
+            <span class="stat-trend neutral">recent activity</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="notif-insight" id="notifInsight" hidden></section>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Notification Center</h2>
+
+          <div class="notif-actions">
+            <button type="button" class="btn-small ghost" id="markAllRead"><i class="fa-solid fa-check-double"></i> Mark all as read</button>
+            <button type="button" class="btn-small ghost" id="clearAll"><i class="fa-regular fa-trash-can"></i> Clear all</button>
+          </div>
+        </div>
+
+        <div class="notif-toolbar">
+          <div class="notif-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="notifSearch" placeholder="Search notifications..." autocomplete="off">
+          </div>
+
+          <div class="filter-tabs notif-chips" id="notifChips">
+            <button type="button" class="filter-btn active" data-filter="all">All<span class="chip-count" data-count="all">0</span></button>
+            <button type="button" class="filter-btn" data-filter="unread">Unread<span class="chip-count" data-count="unread">0</span></button>
+            <button type="button" class="filter-btn" data-filter="points">Points<span class="chip-count" data-count="points">0</span></button>
+            <button type="button" class="filter-btn" data-filter="collection">Collection<span class="chip-count" data-count="collection">0</span></button>
+            <button type="button" class="filter-btn" data-filter="rewards">Rewards<span class="chip-count" data-count="rewards">0</span></button>
+          </div>
+        </div>
+
+        <div id="notifPageList"></div>
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Notification Center.js?v=muhcihad9"></script>
+<script src="Sidebar App.js?v=muhcihad9"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const name = getUserName();
+    const initials = name.split(" ").filter(Boolean).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+    document.querySelectorAll(".profile-name").forEach(el => el.textContent = name);
+    document.querySelectorAll(".avatar").forEach(el => el.textContent = initials);
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const list = EcoNotifs.mountList(document.getElementById("notifPageList"), {
+      group: true,
+      dismissable: true,
+      showLink: true
+    });
+
+    /* ----- filters and search ----- */
+    const chips = document.querySelectorAll("#notifChips .filter-btn");
+    const search = document.getElementById("notifSearch");
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        list.setFilter(chip.dataset.filter);
+      });
+    });
+
+    search.addEventListener("input", () => list.setSearch(search.value));
+
+    /* ----- actions ----- */
+    const markAll = document.getElementById("markAllRead");
+    const clearAll = document.getElementById("clearAll");
+
+    markAll.addEventListener("click", () => EcoNotifs.markAllRead());
+
+    clearAll.addEventListener("click", () => {
+      if (confirm("Clear all notifications? Your points and history stay the same.")) {
+        EcoNotifs.dismissAll();
+      }
+    });
+
+    /* ----- next reward banner ----- */
+    const insight = document.getElementById("notifInsight");
+    let insightKey = "";
+
+    function renderInsight() {
+      const nr = EcoNotifs.nextReward();
+      const key = nr.balance + "|" + (nr.next ? nr.next.id : "all");
+
+      if (key === insightKey || !nr.total) return;
+      insightKey = key;
+
+      let title;
+      let meta;
+
+      if (nr.next) {
+        title = `${nr.remaining.toLocaleString()} pts away from a ${nr.next.name}`;
+        meta = `${nr.balance.toLocaleString()} of ${nr.next.cost.toLocaleString()} pts`
+          + (nr.affordable ? ` \u00b7 you can already redeem ${nr.affordable} reward${nr.affordable === 1 ? "" : "s"}` : "");
+      } else {
+        title = "You can redeem anything in the rewards catalog";
+        meta = `${nr.balance.toLocaleString()} pts available`;
+      }
+
+      insight.hidden = false;
+      insight.innerHTML = `
+        <div class="ni-copy">
+          <span class="ni-kicker"><i class="fa-solid fa-gift"></i> Your next reward</span>
+          <h3></h3>
+          <div class="ni-track"><div class="ni-fill"></div></div>
+          <span class="ni-meta"></span>
+        </div>
+        <a class="ni-btn" href="Rewards.html">View rewards <i class="fa-solid fa-arrow-right"></i></a>
+      `;
+
+      insight.querySelector("h3").textContent = title;
+      insight.querySelector(".ni-meta").textContent = meta;
+
+      const fill = insight.querySelector(".ni-fill");
+      setTimeout(() => { fill.style.width = nr.pct + "%"; }, 80);
+    }
+
+    /* ----- stats, chip counts and button states follow the feed ----- */
+    EcoNotifs.subscribe(feed => {
+      const c = EcoNotifs.counts(feed);
+
+      document.getElementById("statUnread").textContent = c.unread;
+      document.getElementById("statUnreadNote").textContent = c.unread ? "needs your attention" : "All caught up";
+      document.getElementById("statTotal").textContent = c.all;
+      document.getElementById("statWeek").textContent = c.week;
+
+      document.querySelectorAll("[data-count]").forEach(el => {
+        el.textContent = c[el.dataset.count];
+      });
+
+      markAll.disabled = c.unread === 0;
+      clearAll.disabled = c.all === 0;
+
+      renderInsight();
+    });
+  });
+</script>
+
+</body>
+</html>

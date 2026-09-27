@@ -1,0 +1,410 @@
+<!-- Registration Page HTML -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | Log In or Register</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="Main Page.css?v=muhcihad9">
+<link rel="stylesheet" href="Registration.css?v=muhcihad9">
+<link rel="stylesheet" href="Caniogan Streets.css?v=muhcihad9">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a href="Main Page.html" class="logo">
+      <span class="logo-badge"><img src="logo.png" alt="EcoPoints logo"></span>
+      EcoPoints
+    </a>
+    <a href="Main Page.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-shell">
+
+    <aside class="auth-brand">
+      <div class="auth-blob" aria-hidden="true"></div>
+      <div class="auth-brand-inner">
+        <span class="eyebrow"><i class="fa-solid fa-leaf"></i> Barangay Recycling Program</span>
+        <h1>One account.<br>Every drop-off counted.</h1>
+        <p>Register once to start earning EcoPoints on every verified submission, then log back in anytime to track your balance and redeem rewards.</p>
+
+        <ul class="auth-perks">
+          <li><i class="fa-solid fa-gift"></i> Get 250 EcoPoints free just for registering</li>
+          <li><i class="fa-solid fa-shield-halved"></i> Your details stay on this device, never shared publicly</li>
+          <li><i class="fa-solid fa-star"></i> Points credited after every verified collection</li>
+          <li><i class="fa-solid fa-gift"></i> Redeem for rice, groceries, and school supplies</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="auth-tabs" role="tablist">
+        <button class="tab-btn active" data-tab="login" role="tab" aria-selected="true">Log In</button>
+        <button class="tab-btn" data-tab="register" role="tab" aria-selected="false">Register</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="auth-form active" novalidate>
+        <h2>Welcome back</h2>
+        <p class="form-sub">Log in to check your points and rewards.</p>
+
+        <div class="field">
+          <label for="loginEmail">Email address</label>
+          <input type="email" id="loginEmail" placeholder="you@gmail.com" autocomplete="email">
+          <span class="field-error" id="loginEmailError"></span>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password">
+            <button type="button" class="toggle-pw" data-target="loginPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <span class="field-error" id="loginPasswordError"></span>
+        </div>
+
+        <div class="field-row">
+          <label class="checkbox">
+            <input type="checkbox" id="rememberMe">
+            <span>Remember me</span>
+          </label>
+          <a class="link-muted" href="ForgotPassword.html">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="loginSubmit">
+          <span class="btn-label">Log In</span>
+        </button>
+
+        <p class="form-note" id="loginNote"></p>
+      </form>
+
+      <!-- REGISTER -->
+      <form id="registerForm" class="auth-form" novalidate>
+        <h2>Create your account</h2>
+        <p class="form-sub">Registration takes less than a minute. Register now and get <strong>250 EcoPoints free</strong>.</p>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="regFirstName">First name</label>
+            <input type="text" id="regFirstName" placeholder="Juan" autocomplete="given-name">
+            <span class="field-error" id="regFirstNameError"></span>
+          </div>
+          <div class="field">
+            <label for="regLastName">Last name</label>
+            <input type="text" id="regLastName" placeholder="Reyes" autocomplete="family-name">
+            <span class="field-error" id="regLastNameError"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regEmail">Email address (Gmail only)</label>
+          <input type="email" id="regEmail" placeholder="you@gmail.com" autocomplete="email">
+          <span class="field-error" id="regEmailError"></span>
+        </div>
+
+        <div class="field">
+          <label for="regPhone">Mobile number (11 digits)</label>
+          <input type="tel" id="regPhone" placeholder="09123456789" autocomplete="tel" inputmode="numeric" maxlength="11" pattern="\d*">
+          <span class="field-error" id="regPhoneError"></span>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="regHouseNumber">House number</label>
+            <input type="text" id="regHouseNumber" placeholder="e.g. 123" autocomplete="address-line1">
+            <span class="field-error" id="regHouseNumberError"></span>
+          </div>
+          <div class="field">
+            <label for="regStreetSearch">Street (Brgy. Caniogan)</label>
+            <div class="street-combo" id="regStreetCombo">
+              <input type="text" id="regStreetSearch" class="street-search-input" placeholder="Type to search your street..." autocomplete="off" role="combobox" aria-expanded="false" aria-controls="regStreetList" aria-autocomplete="list">
+              <input type="hidden" id="regStreet" name="regStreet">
+              <div class="street-dropdown" id="regStreetList" role="listbox" hidden></div>
+            </div>
+            <span class="field-hint">Select your street from the official Caniogan list.</span>
+            <span class="field-error" id="regStreetError"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regPassword">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="regPassword" placeholder="Create a password" autocomplete="new-password">
+            <button type="button" class="toggle-pw" data-target="regPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <div class="strength-meter" aria-hidden="true"><span id="strengthBar"></span></div>
+          <span class="strength-label" id="strengthLabel">Use 8+ characters with a number and a symbol</span>
+          <span class="field-error" id="regPasswordError"></span>
+        </div>
+
+        <div class="field">
+          <label for="regConfirm">Confirm password</label>
+          <div class="password-wrap">
+            <input type="password" id="regConfirm" placeholder="Re-enter your password" autocomplete="new-password">
+            <button type="button" class="toggle-pw" data-target="regConfirm" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <span class="field-error" id="regConfirmError"></span>
+        </div>
+
+        <label class="checkbox terms">
+          <input type="checkbox" id="agreeTerms">
+          <span>I agree to the <a href="#" id="openTerms">Terms</a> and <a href="#" id="openPrivacy">Privacy Policy</a></span>
+        </label>
+        <span class="field-error" id="agreeTermsError"></span>
+
+        <button type="submit" class="btn btn-primary btn-block" id="registerSubmit">
+          <span class="btn-label">Create Account</span>
+        </button>
+
+        <p class="form-note" id="registerNote"></p>
+      </form>
+
+      <p class="switch-line" id="switchLineLogin">Don't have an account yet? <button type="button" class="switch-btn" data-goto="register">Register</button></p>
+      <p class="switch-line" id="switchLineRegister" hidden>Already have an account? <button type="button" class="switch-btn" data-goto="login">Log In</button></p>
+    </section>
+  </div>
+</main>
+
+<!-- TERMS MODAL -->
+<div class="doc-modal-overlay" id="termsModal">
+  <div class="doc-modal-box">
+    <div class="doc-modal-header">
+      <h3>Terms of Service</h3>
+      <button class="doc-modal-close" id="closeTerms" aria-label="Close">&times;</button>
+    </div>
+    <div class="doc-modal-body">
+      <p class="doc-date">Effective date: January 1, 2025</p>
+
+      <h4>1. Acceptance of Terms</h4>
+      <p>By creating an account with EcoPoints, you confirm that you are a resident of Barangay Dela Paz, Pasig City, and that you agree to be bound by these Terms of Service. If you do not agree, please do not register.</p>
+
+      <h4>2. Eligibility</h4>
+      <p>The EcoPoints program is open to residents of Barangay Dela Paz, Pasig City only. You must provide accurate personal information during registration, including your real name, valid Gmail address, mobile number, and residential address within the covered streets.</p>
+
+      <h4>3. Your Account</h4>
+      <p>You are responsible for keeping your account credentials secure. Do not share your password with others. All activity under your account is your responsibility. Report any unauthorized access to the barangay office immediately.</p>
+
+      <h4>4. EcoPoints Earning</h4>
+      <p>EcoPoints are credited only after a barangay officer verifies your recyclable waste submission. Points are non-transferable, cannot be exchanged for cash, and have no monetary value outside the program. The barangay reserves the right to adjust or revoke points in cases of fraud or misrepresentation.</p>
+
+      <h4>5. Rewards Redemption</h4>
+      <p>Accumulated EcoPoints may be redeemed for available rewards such as rice, groceries, or school supplies, subject to availability and the barangay's current redemption schedule. Rewards are subject to change without prior notice.</p>
+
+      <h4>6. Prohibited Conduct</h4>
+      <p>You agree not to: submit false or inflated quantities of recyclables, create multiple accounts, attempt to manipulate the points system, or use the platform for any purpose other than participation in the barangay recycling program.</p>
+
+      <h4>7. Termination</h4>
+      <p>The barangay reserves the right to suspend or delete any account found to be in violation of these terms, resulting in forfeiture of all accumulated points.</p>
+
+      <h4>8. Changes to Terms</h4>
+      <p>These terms may be updated from time to time. Continued use of the platform after changes constitutes acceptance of the updated terms.</p>
+
+      <h4>9. Contact</h4>
+      <p>For questions, visit the Barangay Dela Paz hall or contact the barangay office directly.</p>
+    </div>
+    <div class="doc-modal-footer">
+      <button class="doc-modal-agree" id="agreeTermsBtn">I Understand</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="doc-modal-overlay" id="privacyModal">
+  <div class="doc-modal-box">
+    <div class="doc-modal-header">
+      <h3>Privacy Policy</h3>
+      <button class="doc-modal-close" id="closePrivacy" aria-label="Close">&times;</button>
+    </div>
+    <div class="doc-modal-body">
+      <p class="doc-date">Effective date: January 1, 2025</p>
+
+      <h4>1. Information We Collect</h4>
+      <p>When you register, we collect your first and last name, Gmail address, mobile number, house number, street, and a securely hashed version of your password. We do not store your password in plain text.</p>
+
+      <h4>2. How We Store Your Data</h4>
+      <p>All registration and session data is stored locally on your device using your browser's localStorage. No data is transmitted to external servers. Your information never leaves your device.</p>
+
+      <h4>3. How We Use Your Information</h4>
+      <p>Your information is used solely to identify you within the EcoPoints program, credit points to your account after verified submissions, and allow you to redeem rewards at the barangay level.</p>
+
+      <h4>4. Data Sharing</h4>
+      <p>We do not sell, rent, or share your personal information with any third parties. Your data may only be accessed by authorized barangay officers administering the program.</p>
+
+      <h4>5. Data Security</h4>
+      <p>Your password is protected using cryptographic hashing with a unique salt. Even if someone accesses your device's storage, your actual password cannot be recovered from the stored data.</p>
+
+      <h4>6. Your Rights</h4>
+      <p>You may request deletion of your account and all associated data by visiting the barangay office. You also have the right to access and correct any inaccurate information on your profile.</p>
+
+      <h4>7. Children's Privacy</h4>
+      <p>This program is intended for adults and registered household representatives. If a minor's information is submitted, it must be done by a parent or legal guardian.</p>
+
+      <h4>8. Changes to This Policy</h4>
+      <p>This Privacy Policy may be updated periodically. Any significant changes will be communicated through the barangay's official channels.</p>
+
+      <h4>9. Contact</h4>
+      <p>For privacy concerns, please visit the Barangay Dela Paz hall or speak with the barangay administrator.</p>
+    </div>
+    <div class="doc-modal-footer">
+      <button class="doc-modal-agree" id="agreePrivacyBtn">I Understand</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.doc-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.doc-modal-overlay.open {
+  display: flex;
+}
+.doc-modal-box {
+  background: var(--surface, #fff);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+  animation: docPop 0.25s ease;
+  overflow: hidden;
+}
+@keyframes docPop {
+  from { transform: scale(0.94) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.doc-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  flex-shrink: 0;
+}
+.doc-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green-dark, #3b6e1a);
+}
+.doc-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border, #e5e7eb);
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--ink-soft, #6b7280);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+.doc-modal-close:hover {
+  background: var(--cream, #f9fafb);
+  color: var(--ink, #111);
+}
+.doc-modal-body {
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border, #e5e7eb) transparent;
+}
+.doc-date {
+  font-size: 0.78rem;
+  color: var(--ink-soft, #6b7280);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.doc-modal-body h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--green-dark, #3b6e1a);
+  margin: 1.1rem 0 0.35rem;
+}
+.doc-modal-body h4:first-of-type {
+  margin-top: 0;
+}
+.doc-modal-body p {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #4b5563);
+  line-height: 1.7;
+}
+.doc-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border, #e5e7eb);
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+.doc-modal-agree {
+  padding: 9px 24px;
+  background: var(--green-primary, #769826);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.doc-modal-agree:hover { opacity: 0.88; }
+</style>
+
+<script>
+(function() {
+  function openModal(id) { document.getElementById(id).classList.add("open"); }
+  function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+
+  document.getElementById("openTerms").addEventListener("click", function(e) {
+    e.preventDefault(); openModal("termsModal");
+  });
+  document.getElementById("openPrivacy").addEventListener("click", function(e) {
+    e.preventDefault(); openModal("privacyModal");
+  });
+
+  document.getElementById("closeTerms").addEventListener("click", function() { closeModal("termsModal"); });
+  document.getElementById("closePrivacy").addEventListener("click", function() { closeModal("privacyModal"); });
+
+  document.getElementById("agreeTermsBtn").addEventListener("click", function() {
+    document.getElementById("agreeTerms").checked = true;
+    closeModal("termsModal");
+  });
+  document.getElementById("agreePrivacyBtn").addEventListener("click", function() {
+    document.getElementById("agreeTerms").checked = true;
+    closeModal("privacyModal");
+  });
+
+  document.getElementById("termsModal").addEventListener("click", function(e) {
+    if (e.target === this) closeModal("termsModal");
+  });
+  document.getElementById("privacyModal").addEventListener("click", function(e) {
+    if (e.target === this) closeModal("privacyModal");
+  });
+})();
+</script>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="auth-common.js?v=muhcihad9"></script>
+<script src="Caniogan Streets.js?v=muhcihad9"></script>
+<script src="Registration.js?v=muhcihad9"></script>
+</body>
+</html>

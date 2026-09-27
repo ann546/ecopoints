@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Collection History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Collector Pages.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <style>
+      .history-toolbar {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) 180px 180px;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .history-toolbar input,
+      .history-toolbar select {
+        width: 100%;
+        min-height: 42px;
+        padding: 0 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--dark-text);
+        font: inherit;
+        font-size: 12px;
+      }
+
+      .history-table-wrap {
+        overflow-x: auto;
+      }
+
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 920px;
+      }
+
+      .history-table th,
+      .history-table td {
+        padding: 13px 10px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      .history-table th {
+        color: var(--muted);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .history-table td {
+        font-size: 11px;
+        color: var(--dark-text);
+      }
+
+      .history-table tbody tr:hover {
+        background: #fafbf9;
+      }
+
+      .history-resident {
+        font-weight: 800;
+        color: var(--dark-green);
+      }
+
+      .history-id {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 3px;
+      }
+
+      .history-points {
+        font-weight: 800;
+        color: var(--primary-green);
+      }
+
+      .history-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #eaf5e9;
+        color: #36733a;
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .history-empty {
+        text-align: center;
+        padding: 48px 20px !important;
+        color: var(--muted);
+      }
+
+      .history-empty i {
+        display: block;
+        font-size: 30px;
+        color: var(--border);
+        margin-bottom: 10px;
+      }
+
+      .history-empty strong {
+        display: block;
+        color: var(--dark-text);
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .history-empty span {
+        font-size: 11px;
+      }
+
+      .history-view-btn {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--primary-green);
+        border-radius: 8px;
+        padding: 8px 11px;
+        font: inherit;
+        font-size: 10px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .history-view-btn:hover {
+        background: #f4f8f1;
+      }
+
+      .history-modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(17, 29, 9, 0.45);
+        z-index: 1000;
+      }
+
+      .history-modal[hidden] {
+        display: none;
+      }
+
+      .history-modal-card {
+        width: min(620px, 100%);
+        max-height: 90vh;
+        overflow: auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+      }
+
+      .history-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 22px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .history-modal-head h2 {
+        margin: 0;
+        color: var(--dark-green);
+        font-family: var(--font-heading);
+      }
+
+      .history-modal-close {
+        width: 34px;
+        height: 34px;
+        border: 0;
+        border-radius: 50%;
+        background: #f2f4f1;
+        color: var(--dark-green);
+        cursor: pointer;
+      }
+
+      .history-modal-body {
+        padding: 22px;
+      }
+
+      .history-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .history-detail {
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #fafbf9;
+      }
+
+      .history-detail-label {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 800;
+        margin-bottom: 5px;
+      }
+
+      .history-detail-value {
+        display: block;
+        color: var(--dark-text);
+        font-size: 12px;
+        font-weight: 700;
+        word-break: break-word;
+      }
+
+      .history-detail.full {
+        grid-column: 1 / -1;
+      }
+
+      .history-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 760px) {
+        .history-toolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .history-detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .history-detail.full {
+          grid-column: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a href="Collector Dashboard.html" class="nav-item">
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="QR Code Scanner.html" class="nav-item">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>QR Code Scanner</span>
+          </a>
+
+          <a href="Waste Verification.html" class="nav-item">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span>Waste Verification</span>
+          </a>
+
+          <a href="Collection History.html" class="nav-item active">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Collection History</span>
+          </a>
+
+          <a href="Resident EcoPoints Records.html" class="nav-item">
+            <i class="fa-solid fa-address-book"></i>
+            <span>Resident EcoPoints Records</span>
+          </a>
+
+          <a href="Notifications.html" class="nav-item">
+            <i class="fa-solid fa-bell"></i>
+            <span>Notifications</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Registration.html" class="nav-item logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="globalSearch"
+              placeholder="Search residents, waste records, transactions..."
+            />
+          </div>
+
+          <div class="topbar-actions">
+            <button
+              class="icon-btn bell-btn"
+              id="bellBtn"
+              aria-label="Notifications"
+            >
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar">EC</span>
+                <span class="profile-name">EcoPoints Collector</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#">
+                  <i class="fa-solid fa-user"></i>
+                  View Profile
+                </a>
+
+                <a href="#">
+                  <i class="fa-solid fa-gear"></i>
+                  Settings
+                </a>
+
+                <a href="Registration.html">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i
+                class="fa-solid fa-clock-rotate-left"
+                style="
+                  color: var(--primary-green);
+                  font-size: 0.8em;
+                  margin-right: 8px;
+                "
+              ></i>
+              Collection History
+            </h1>
+
+            <p>
+              View completed waste collection records and the EcoPoints issued
+              to registered residents.
+            </p>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon icon-lightgreen">
+                <i class="fa-solid fa-box-open"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label"> Completed Collections </span>
+
+                <span class="stat-value" id="statCollections"> 0 </span>
+
+                <span class="stat-trend neutral"> completed records </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-green">
+                <i class="fa-solid fa-star"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label"> EcoPoints Issued </span>
+
+                <span class="stat-value" id="statIssued"> 0 </span>
+
+                <span class="stat-trend up" id="statIssuedCount">
+                  0 transactions
+                </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-orange">
+                <i class="fa-solid fa-weight-scale"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label"> Waste Collected </span>
+
+                <span class="stat-value" id="statWeight"> 0 </span>
+
+                <span class="stat-trend neutral"> verified kilograms </span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-dark">
+                <i class="fa-solid fa-users"></i>
+              </div>
+
+              <div class="stat-body">
+                <span class="stat-label"> Residents Collected </span>
+
+                <span class="stat-value" id="statResidents"> 0 </span>
+
+                <span class="stat-trend neutral" id="statResidentNote">
+                  registered residents
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Completed Collection Records</h2>
+
+              <span class="panel-tag" id="historyCount"> 0 records </span>
+            </div>
+
+            <div class="history-toolbar">
+              <input
+                type="text"
+                id="historySearch"
+                placeholder="Search resident, Account ID, waste type, collector..."
+              />
+
+              <select id="wasteFilter">
+                <option value="all">All waste types</option>
+              </select>
+
+              <select id="verificationFilter">
+                <option value="all">All verification statuses</option>
+                <option value="verified">Verified</option>
+              </select>
+            </div>
+
+            <div class="history-table-wrap">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Resident</th>
+                    <th>Waste Type</th>
+                    <th>Weight</th>
+                    <th>Collector</th>
+                    <th>Verification Status</th>
+                    <th>EcoPoints Issued</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+
+                <tbody id="historyTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="history-modal" id="historyModal" hidden>
+      <div
+        class="history-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="historyModalTitle"
+      >
+        <div class="history-modal-head">
+          <h2 id="historyModalTitle">Collection Details</h2>
+
+          <button
+            class="history-modal-close"
+            id="historyModalClose"
+            aria-label="Close"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="history-modal-body" id="historyModalBody"></div>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="user-module.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+    <script src="Collection History.js?v=muhcihad9"></script>
+    <script src="Sidebar App.js?v=muhcihad9"></script>
+  </body>
+</html>

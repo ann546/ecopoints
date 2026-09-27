@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Caniogan Streets.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Admin Dashboard.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a href="#top" class="nav-item active" data-label="Dashboard">
+            <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+          </a>
+          <a href="#collector-groups" class="nav-item" data-label="Collector Groups">
+            <i class="fa-solid fa-people-group"></i><span>Collector Groups</span>
+          </a>
+          <a href="#add-collector" class="nav-item" data-label="Add Collector">
+            <i class="fa-solid fa-user-plus"></i><span>Add Collector</span>
+          </a>
+          <a href="#collectors" class="nav-item" data-label="Collectors">
+            <i class="fa-solid fa-truck-fast"></i><span>Collectors</span>
+          </a>
+          <a href="Admin Scanner.html" class="nav-item" data-label="Redemption Scanner">
+            <i class="fa-solid fa-qrcode"></i><span>Redemption Scanner</span>
+          </a>
+
+          <div class="nav-divider"></div>
+
+          <a href="#" class="nav-item" id="restrictedSettings" data-label="Settings">
+            <i class="fa-solid fa-gear"></i><span>Settings</span>
+          </a>
+        </nav>
+
+        <a href="Collector Login.html" class="nav-item logout" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <a href="Main Page.html" class="icon-btn" title="View Main Page" aria-label="View Main Page">
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearch" placeholder="Search streets, collectors..." />
+          </div>
+
+          <div class="topbar-actions">
+            <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i>
+              <span class="dot"></span>
+            </button>
+
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar" id="topbarAvatar">AD</span>
+                <span class="profile-name" id="topbarName">Barangay Admin</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#" id="dropdownLogout">
+                  <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content" id="top">
+          <div class="page-heading">
+            <h1>
+              <i class="fa-solid fa-user-shield" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>
+              Admin Dashboard
+            </h1>
+            <p id="welcomeText">Manage the collector groups and their permanently assigned collection streets.</p>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon icon-green"><i class="fa-solid fa-road"></i></div>
+              <div class="stat-body">
+                <span class="stat-label">Total Streets</span>
+                <span class="stat-value" id="statTotalStreets">0</span>
+                <span class="stat-trend neutral">in Barangay Caniogan</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-orange"><i class="fa-solid fa-list-check"></i></div>
+              <div class="stat-body">
+                <span class="stat-label">Streets Assigned</span>
+                <span class="stat-value" id="statStreetsAssigned">0</span>
+                <span class="stat-trend neutral" id="statStreetsAssignedNote">of 0 total streets</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-lightgreen"><i class="fa-solid fa-truck-fast"></i></div>
+              <div class="stat-body">
+                <span class="stat-label">Active Collectors</span>
+                <span class="stat-value" id="statActiveCollectors">0</span>
+                <span class="stat-trend neutral" id="statCollectorsNote">of 0 total</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-dark"><i class="fa-solid fa-people-group"></i></div>
+              <div class="stat-body">
+                <span class="stat-label">Groups Staffed</span>
+                <span class="stat-value" id="statGroupsStaffed">0 of 0</span>
+                <span class="stat-trend neutral">collector groups</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="collector-groups">
+            <div class="panel-head">
+              <h2>Collector Groups</h2>
+              <span class="panel-tag" id="groupsPanelTag">6 members per group, including up to 2 drivers</span>
+            </div>
+
+            <p style="color:var(--muted); font-size:13px; margin-top:-10px; margin-bottom:16px;">
+              Collection runs Monday, Tuesday, Thursday, Friday, Saturday &amp; Sunday, 8:00 AM to 5:00 PM.
+              Each group's assigned streets are split evenly across those days below.
+            </p>
+
+            <div class="group-grid" id="groupCardsWrap"></div>
+          </div>
+
+          <div class="panel" id="street-assignments">
+            <div class="panel-head">
+              <h2>Street Assignments</h2>
+              <span class="panel-tag" id="streetCountTag">0 streets</span>
+            </div>
+
+            <p style="color:var(--muted); font-size:13px; margin-top:-10px; margin-bottom:16px;">
+              Streets are listed in route order &mdash; once a group finishes a street, they move to the next one on their list. Reassign a street to move it between groups.
+              The Collection Day column shows which day of the 8:00 AM&ndash;5:00 PM schedule each street is due.
+            </p>
+
+            <div class="admin-toolbar">
+              <input type="text" id="streetSearch" placeholder="Search a Caniogan street..." />
+              <select id="streetDayFilter" aria-label="Filter by collection day"></select>
+              <div class="view-toggle">
+                <button type="button" class="view-toggle-btn active" id="viewTableBtn">
+                  <i class="fa-solid fa-table-list"></i> Table View
+                </button>
+                <button type="button" class="view-toggle-btn" id="viewCalendarBtn">
+                  <i class="fa-solid fa-calendar-days"></i> Calendar View
+                </button>
+              </div>
+            </div>
+
+            <div class="table-wrap" id="streetTableWrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Street / Area</th>
+                    <th>Classification</th>
+                    <th>Assigned Group</th>
+                    <th>Collection Day</th>
+                  </tr>
+                </thead>
+                <tbody id="streetTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="calendar-grid" id="calendarWrap" hidden></div>
+          </div>
+
+          <div class="panel" id="add-collector">
+            <div class="panel-head">
+              <h2>Add Collector or Driver</h2>
+              <span class="panel-tag">Creates a collector login account</span>
+            </div>
+
+            <form id="addCollectorForm" novalidate>
+              <div class="admin-field-grid">
+                <div class="field">
+                  <label for="newPosition">Position</label>
+                  <select id="newPosition">
+                    <option value="Collector">Collector</option>
+                    <option value="Driver">Driver</option>
+                    <option value="Driver & Collector">Driver &amp; Collector</option>
+                  </select>
+                  <span class="field-hint">A group has two driver slots. "Driver &amp; Collector" fills a driver slot but also does collection work.</span>
+                </div>
+
+                <div class="field">
+                  <label for="newGroup">Collector group</label>
+                  <select id="newGroup"></select>
+                </div>
+
+                <div class="field">
+                  <label for="newFirstName">First name</label>
+                  <input type="text" id="newFirstName" autocomplete="off" />
+                  <span class="field-error" id="newFirstNameError"></span>
+                </div>
+
+                <div class="field">
+                  <label for="newLastName">Last name</label>
+                  <input type="text" id="newLastName" autocomplete="off" />
+                  <span class="field-error" id="newLastNameError"></span>
+                </div>
+
+                <div class="field">
+                  <label for="newEmail">Email address</label>
+                  <input type="email" id="newEmail" placeholder="name@eco.collect" autocomplete="off" />
+                  <span class="field-error" id="newEmailError"></span>
+                </div>
+
+                <div class="field">
+                  <label for="newPhone">Contact number</label>
+                  <input type="tel" id="newPhone" inputmode="numeric" maxlength="12" autocomplete="off" />
+                  <span class="field-error" id="newPhoneError"></span>
+                </div>
+
+                <div class="field">
+                  <label for="newPassword">Temporary password</label>
+                  <div class="password-wrap">
+                    <input type="password" id="newPassword" placeholder="8+ characters, a number and a symbol" autocomplete="new-password" />
+                    <button type="button" class="toggle-pw" data-target="newPassword" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                  <span class="field-error" id="newPasswordError"></span>
+                </div>
+
+                <div class="field">
+                  <label for="newConfirm">Confirm password</label>
+                  <div class="password-wrap">
+                    <input type="password" id="newConfirm" autocomplete="new-password" />
+                    <button type="button" class="toggle-pw" data-target="newConfirm" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                  <span class="field-error" id="newConfirmError"></span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="addCollectorSubmit">
+                <i class="fa-solid fa-user-plus"></i> Add Account
+              </button>
+
+              <p class="form-note" id="addCollectorNote"></p>
+            </form>
+          </div>
+
+          <div class="panel" id="collectors">
+            <div class="panel-head">
+              <h2>Collectors</h2>
+              <span class="panel-tag" id="collectorCountTag">0 collectors</span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Collector</th>
+                    <th>Collector ID</th>
+                    <th>Contact</th>
+                    <th>Assigned Group</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="collectorTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="api-client.js?v=muhcihad9"></script>
+    <script src="legacy-bridge.js?v=muhcihad9"></script>
+    <script src="auth-common.js?v=muhcihad9"></script>
+    <script src="Caniogan Streets.js?v=muhcihad9"></script>
+    <script src="collector-module.js?v=muhcihad9"></script>
+    <script src="Admin Dashboard.js?v=muhcihad9"></script>
+  </body>
+</html>

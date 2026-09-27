@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoPoints | Redemption Scanner</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="User Dashboard.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Resident Pages.css?v=muhcihad9" />
+    <link rel="stylesheet" href="Admin Scanner.css?v=muhcihad9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-leaf"></i>
+          <span>EcoPoints</span>
+        </div>
+
+        <nav class="side-nav">
+          <a href="Admin Dashboard.html#top" class="nav-item" data-label="Dashboard">
+            <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+          </a>
+          <a href="Admin Dashboard.html#collector-groups" class="nav-item" data-label="Collector Groups">
+            <i class="fa-solid fa-people-group"></i><span>Collector Groups</span>
+          </a>
+          <a href="Admin Dashboard.html#add-collector" class="nav-item" data-label="Add Collector">
+            <i class="fa-solid fa-user-plus"></i><span>Add Collector</span>
+          </a>
+          <a href="Admin Dashboard.html#collectors" class="nav-item" data-label="Collectors">
+            <i class="fa-solid fa-truck-fast"></i><span>Collectors</span>
+          </a>
+          <a href="Admin Scanner.html" class="nav-item active" data-label="Redemption Scanner">
+            <i class="fa-solid fa-qrcode"></i><span>Redemption Scanner</span>
+          </a>
+        </nav>
+
+        <a href="Collector Login.html" class="nav-item logout" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <div class="main">
+        <header class="topbar">
+          <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <a href="Main Page.html" class="icon-btn" title="View Main Page" aria-label="View Main Page">
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+          <div class="topbar-actions">
+            <div class="profile-menu" id="profileMenu">
+              <button class="profile-btn" id="profileBtn">
+                <span class="avatar" id="topbarAvatar">AD</span>
+                <span class="profile-name" id="topbarName">Barangay Admin</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <a href="#" id="dropdownLogout">
+                  <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <div class="page-heading">
+            <h1>
+              <i class="fa-solid fa-qrcode" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>
+              Redemption Scanner
+            </h1>
+            <p>Scan a resident's QR code to see their details and verify their points redemption requests.</p>
+          </div>
+
+          <div class="panel-grid two-col">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Scan Resident QR</h2>
+                <span class="panel-tag" id="scanStateTag">Camera off</span>
+              </div>
+
+                            <div class="as-scan-frame" id="scannerFrame">
+                <div id="qrReader" class="scanner-video" style="width:100%; min-height:260px;"></div>
+                <div class="as-scan-placeholder" id="scanPlaceholder">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Camera is off</span>
+                </div>
+              </div>
+
+              <canvas id="scanCanvas" hidden></canvas>
+
+              <div class="as-actions">
+                <button type="button" class="btn btn-primary" id="startScanBtn">
+                  <i class="fa-solid fa-camera"></i> Start Camera
+                </button>
+                <button type="button" class="btn btn-outline" id="stopScanBtn" hidden>
+                  <i class="fa-solid fa-stop"></i> Stop Camera
+                </button>
+              </div>
+
+              <p class="form-note" id="scanNote"></p>
+
+              <form class="as-manual" id="manualForm" novalidate>
+                <div class="field">
+                  <label for="manualId">Or enter the Account ID</label>
+                  <input type="text" id="manualId" placeholder="e.g. ECO-1001" autocomplete="off" />
+                </div>
+                <button type="submit" class="btn btn-outline">
+                  <i class="fa-solid fa-magnifying-glass"></i> Look Up Resident
+                </button>
+              </form>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Resident Details</h2>
+                <span class="panel-tag" id="residentTag">No resident</span>
+              </div>
+
+              <div class="as-empty" id="residentEmpty">
+                <i class="fa-solid fa-id-card"></i>
+                <strong>No resident scanned yet</strong>
+                <span>Start the camera and scan a resident's QR code, or enter their Account ID.</span>
+              </div>
+
+              <div id="residentView" hidden>
+                <div class="as-resident-head">
+                  <div class="as-avatar" id="resAvatar">--</div>
+                  <div>
+                    <h3 id="resName">Resident</h3>
+                    <span id="resId">&mdash;</span>
+                  </div>
+                </div>
+
+                <div class="as-detail-grid">
+                  <div class="as-detail wide">
+                    <span>Email address</span>
+                    <strong id="resEmail">&mdash;</strong>
+                  </div>
+                  <div class="as-detail">
+                    <span>Phone number</span>
+                    <strong id="resPhone">&mdash;</strong>
+                  </div>
+                  <div class="as-detail">
+                    <span>House number</span>
+                    <strong id="resHouse">&mdash;</strong>
+                  </div>
+                  <div class="as-detail wide">
+                    <span>Street</span>
+                    <strong id="resStreet">&mdash;</strong>
+                  </div>
+                  <div class="as-detail">
+                    <span>Member since</span>
+                    <strong id="resSince">&mdash;</strong>
+                  </div>
+                  <div class="as-detail">
+                    <span>EcoPoints balance</span>
+                    <strong id="resBalance">&mdash;</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Redemption Requests</h2>
+              <span class="panel-tag" id="requestTag">0 requests</span>
+            </div>
+
+            <p class="form-note" id="requestNote"></p>
+
+            <div class="as-empty" id="requestEmpty">
+              <i class="fa-solid fa-gift"></i>
+              <strong>No redemption requests to show</strong>
+              <span>Scan a resident to see their redemption requests here.</span>
+            </div>
+
+            <div class="as-request-list" id="requestList"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+        <script src="api-client.js?v=muhcihad9"></script>
+        <script src="auth-common.js?v=muhcihad9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <script src="Admin Scanner.js?v=muhcihad9"></script>
+  </body>
+</html>

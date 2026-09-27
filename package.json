@@ -1,0 +1,21 @@
+{
+  "name": "new-9-21-26-updated-ecopoints-file",
+  "version": "1.0.0",
+  "description": "EcoPoints - Integrated Waste Collection and Rewards System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.4"
+  }
+}

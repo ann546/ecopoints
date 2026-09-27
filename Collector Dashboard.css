@@ -1,0 +1,142 @@
+.route-scroll {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.schedule-empty-note {
+  padding: var(--space-3);
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.week-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-2);
+}
+
+.week-day-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 170px;
+  padding: 12px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
+
+.week-day-card.today {
+  border-color: var(--primary-green);
+  background: rgba(118, 152, 38, 0.06);
+  box-shadow: 0 0 0 3px rgba(118, 152, 38, 0.12);
+}
+
+.week-day-card.off {
+  background: var(--light-gray);
+}
+
+.week-day-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.week-day-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.week-day-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--dark-green);
+}
+
+.week-day-card.off .week-day-name {
+  color: var(--muted);
+}
+
+.week-day-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.week-today-pill {
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+.week-day-count {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(118, 152, 38, 0.12);
+  color: var(--primary-green);
+  white-space: nowrap;
+}
+
+.week-day-card.off .week-day-count {
+  background: rgba(122, 122, 122, 0.14);
+  color: var(--muted);
+}
+
+.week-day-hours {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.week-day-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: 210px;
+  overflow-y: auto;
+  padding-top: 4px;
+}
+
+.week-street-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.week-street-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dark-text);
+  background: var(--light-gray);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.week-day-card.today .week-street-chip {
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+
+.week-day-note {
+  margin: auto;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}

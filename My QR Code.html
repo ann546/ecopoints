@@ -1,0 +1,165 @@
+<!-- My QR Code Page HTML -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoPoints | My QR Code</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="User Dashboard.css?v=muhcihad9">
+<link rel="stylesheet" href="Resident Pages.css?v=muhcihad9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <i class="fa-solid fa-leaf"></i>
+      <span>EcoPoints</span>
+    </div>
+
+    <nav class="side-nav">
+
+      <a href="User Dashboard.html" class="nav-item" data-label="Dashboard">
+        <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+      </a>
+
+      <a href="My QR Code.html" class="nav-item active" data-label="My QR Code">
+        <i class="fa-solid fa-qrcode"></i><span>My QR Code</span>
+      </a>
+
+      <a href="My EcoPoints.html" class="nav-item" data-label="My EcoPoints">
+        <i class="fa-solid fa-star"></i><span>My EcoPoints</span>
+      </a>
+
+      <a href="Rewards.html" class="nav-item" data-label="Rewards">
+        <i class="fa-solid fa-gift"></i><span>Rewards</span>
+      </a>
+
+      <a href="Collection Schedule.html" class="nav-item" data-label="Collection Schedule">
+        <i class="fa-solid fa-calendar-days"></i><span>Collection Schedule</span>
+      </a>
+
+      <a href="Notifications.html" class="nav-item" data-label="Notifications">
+        <i class="fa-solid fa-bell"></i><span>Notifications</span>
+        <span class="nav-badge" style="display:none;">0</span>
+      </a>
+
+      <a href="Achievements.html" class="nav-item" data-label="Achievements">
+        <i class="fa-solid fa-trophy"></i><span>Achievements</span>
+      </a>
+
+      <a href="Leaderboard.html" class="nav-item" data-label="Leaderboard">
+        <i class="fa-solid fa-ranking-star"></i><span>Leaderboard</span>
+      </a>
+
+      <a href="Profile.html" class="nav-item" data-label="Profile">
+        <i class="fa-solid fa-user"></i><span>Profile</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      
+
+    </nav>
+
+    <a href="Registration.html" class="nav-item logout">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main -->
+  <div class="main">
+
+    
+
+    <header class="topbar">
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <a
+            href="Main Page.html"
+            class="icon-btn home-btn"
+            title="Home"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house"></i>
+          </a>
+
+      
+
+      <div class="topbar-actions">
+
+        <button class="icon-btn bell-btn" id="bellBtn" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="dot"></span>
+        </button>
+
+        <div class="profile-menu" id="profileMenu">
+          <button class="profile-btn" id="profileBtn">
+            <span class="avatar">JD</span>
+            <span class="profile-name">Juan Dela Cruz</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <a href="Profile.html"><i class="fa-solid fa-user"></i> View Profile</a>
+            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="Registration.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-heading">
+        <h1><i class="fa-solid fa-qrcode" style="color:var(--primary-green); font-size:.8em; margin-right:8px;"></i>My QR Code</h1>
+        <p>Show this to the collector on your barangay's collection day so your submission can be verified.</p>
+      </div>
+
+      <div class="panel">
+        <div class="qr-card">
+          <div class="qr-box" id="qrBox"></div>
+          <div class="qr-userid">Account ID: <span id="qrUserId">&mdash;</span></div>
+          <div class="qr-name" id="qrUserName">Resident</div>
+          <button class="btn btn-outline" id="downloadBtn">
+            <i class="fa-solid fa-download"></i> Download QR Code
+          </button>
+          <p class="qr-note">Keep this code private. Only show it to the barangay collector during verification on your collection day.</p>
+        </div>
+      </div>
+
+
+    </main>
+
+  </div>
+
+</div>
+
+<script src="api-client.js?v=muhcihad9"></script>
+<script src="auth-common.js?v=muhcihad9"></script>
+<script src="user-module.js?v=muhcihad9"></script>
+<script src="Notification Center.js?v=muhcihad9"></script>
+<script src="Sidebar App.js?v=muhcihad9"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="My QR Code.js?v=muhcihad9"></script>
+</body>
+</html>
