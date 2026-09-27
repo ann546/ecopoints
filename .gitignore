@@ -1,0 +1,14 @@
+node_modules/
+npm-debug.log*
+
+.env
+
+_npm_out.log
+_npm_err.log
+_cf4_out.log
+_cf4_err.log
+_t1.log
+_t2.log
+
+cloudflared.exe
+*.sql
